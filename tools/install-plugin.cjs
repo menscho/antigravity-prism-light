@@ -2142,7 +2142,7 @@ function formatInstallSelfCheckSummary(res) {
   const launcherPath = res?.launcher?.desktopPath || res?.launcher?.appPath || null;
   const lines = [
     "",
-    "================ Obsidian Prism 安装自检摘要 / Self-Check Summary ================",
+    "=========== Antigravity Prism Light 安装自检摘要 / Self-Check Summary ===========",
     `[中文] 插件目录: ${res?.targetDir || getDefaultPluginTargetDir()}`,
     `[中文] 后台守护: ${daemonAlive ? "运行中 (PID " + (res?.daemon?.pid || "?") + ")" : "未启动"} | 已连接窗口: ${attachedCount} | 思考翻译模块: ${sc.hasThoughtTranslator ? "已就绪" : "缺失"} | 壁纸通道(Ch7): ${sc.hasWallpaperChannel ? "已就绪" : "缺失"} | 独立Watcher: ${sc.watcherInstalled ? "已安装" : "未安装(原生Sidecar/源码模式)"}`,
     `[中文] 快捷方式 --remote-debugging-port=0: 本次新补齐 ${patchedCount} 个，已就绪 ${alreadySetCount} 个${shadowCount > 0 ? `（含 ${shadowCount} 个 XDG 影子覆写，零 root 权限，卸载自动撤回）` : ""}${skippedCount > 0 ? `，权限不足跳过 ${skippedCount} 个（系统目录需管理员权限或安全拦截）` : ""}。`,
@@ -2163,7 +2163,7 @@ function formatInstallSelfCheckSummary(res) {
       ? [`[中文] ${isLinuxLauncher ? "Linux" : "macOS"} 无损启动器提示（非致命）: ${res.launcher.error}`]
       : []),
     thoughtMode === "off"
-      ? "[中文] 提示: 思考过程翻译默认处于关闭态 (off, 0 B 注入)，请打开 Antigravity「设置 -> 外观 -> Obsidian Prism」手动开启「机器翻译」或「AI 流式转译」。"
+      ? "[中文] 提示: 思考过程翻译默认处于关闭态 (off, 0 B 注入)，请打开 Antigravity「设置 -> 外观 -> Antigravity Prism Light」手动开启「机器翻译」或「AI 流式转译」。"
       : `[中文] 思考过程翻译当前模式: ${thoughtMode}（如翻译异常，可在设置卡片点击「一键诊断」排查）。`,
     sc.bareAntigravityRunning || sc.needsHostRelaunch
       ? "[中文] 重要提醒: 检测到当前 Antigravity 为无调试端口裸启实例（常见于客户端在线更新后），请关闭并通过「Antigravity (Prism)」快捷方式重新打开 Antigravity 一次即可自动激活！"
@@ -2174,7 +2174,7 @@ function formatInstallSelfCheckSummary(res) {
       ? [`[EN] XDG Shadow Override: created ${shadowCount} user-level override(s) in ~/.local/share/applications (rootless, fully reverted on uninstall).`]
       : []),
     thoughtMode === "off"
-      ? "[EN] Note: Thought Translator is OFF by default (0 B injected). Enable Machine or AI streaming mode in Settings -> Appearance -> Obsidian Prism."
+      ? "[EN] Note: Thought Translator is OFF by default (0 B injected). Enable Machine or AI streaming mode in Settings -> Appearance -> Antigravity Prism Light."
       : `[EN] Thought Translator mode: ${thoughtMode} (use the 1-click Diagnose bar in Settings if translation fails).`,
     sc.bareAntigravityRunning || sc.needsHostRelaunch
       ? "[EN] Action Required: Antigravity is currently running bare without --remote-debugging-port=0 (common after an in-app update). Close and relaunch Antigravity once via the Antigravity (Prism) shortcut or launcher to activate."
