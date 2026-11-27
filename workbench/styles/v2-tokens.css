@@ -1,0 +1,693 @@
+/* ==========================================================================
+   AGY Obsidian Prism v3.5 — Design Tokens & Optical Surface Engine
+   Primary Flagship: Obsidian Neutral (Dark / Light)
+   Comparison Presets: Titanium Prism (Dark / Light), Warm Editorial (Dark / Light)
+   ========================================================================== */
+
+.ag-v2-stage {
+  /* Live Inspector Tunable Tokens */
+  --ag-v2-radius: 6px;
+  --ag-v2-specular: 0.095;
+  --ag-v2-border-alpha: 0.115;
+  --ag-v2-glass-blur: 20px;
+  --ag-v2-prose-lh: 1.7;
+  --ag-v2-grain-alpha: 0.022;
+  --ag-prism-strength: 1;
+
+  /* Sidebar Hybrid Drawer & Zen Rail Geometry (v3.5) */
+  --ag-sidebar-w: 236px;
+  --ag-sidebar-rail-w: 56px;
+  --ag-spring-sidebar-ease: cubic-bezier(0.22, 1.08, 0.36, 1);
+  --ag-spring-sidebar-dur: 300ms;
+
+  /* Official Google 4-Color Brand Accents */
+  --ag-google-blue: #4285f4;
+  --ag-google-red: #ea4335;
+  --ag-google-yellow: #fbbc04;
+  --ag-google-green: #34a853;
+  --bg-elevated: var(--surface-1);
+
+  /* Concentric Micro-Bevel Radius Scale (R_outer = R_inner + d) */
+  --ag-v2-r-micro: 2px;
+  --ag-v2-r-xs: max(2px, calc(var(--ag-v2-radius, 6px) - 2px)); /* 4px controls */
+  --ag-v2-r-sm: var(--ag-v2-radius, 6px);                         /* 6px cards/bubbles */
+  --ag-v2-r-md: calc(var(--ag-v2-radius, 6px) + 2px);             /* 8px primary islands */
+  --ag-v2-r-lg: calc(var(--ag-v2-radius, 6px) + 4px);
+
+  /* Strict Typography Tiers (Zero-External Google Sans Stack) */
+  --font-sans: 'Google Sans', 'Google Sans Text', 'Inter', 'Segoe UI Variable', 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei UI', system-ui, sans-serif;
+  --ag-v2-font-sans: var(--font-sans);
+  --ag-v2-font-serif: 'Newsreader', 'Noto Serif SC', 'Instrument Serif', Georgia, 'Songti SC', serif;
+  --ag-v2-font-mono: 'Google Sans Mono', 'JetBrains Mono', 'SF Mono', 'Noto Sans SC', Consolas, monospace;
+  --ag-cs-r-sm: var(--ag-v2-r-xs);
+  --ag-cs-r-md: calc(var(--ag-v2-radius, 6px) + 2px);
+  --ag-cs-r-lg: calc(var(--ag-v2-radius, 6px) + 4px);
+  --ag-cs-r-xl: calc(var(--ag-v2-radius, 6px) + 8px);
+  --ag-cs-r-pill: 999px;
+
+  /* Serif is STRICTLY confined to Studio home greeting & book-scale metric */
+  --ag-v2-display-font: var(--ag-v2-font-serif);
+  --ag-v2-display-tracking: -0.018em;
+  --ag-v2-display-weight: 400;
+
+  /* Gemini 4-Stop Optical Prism Spectrum */
+  --ag-prism-cobalt: #4c8df6;
+  --ag-prism-iris: #9b72cb;
+  --ag-prism-coral: #d96570;
+  --ag-prism-amber: #f2b84b;
+  --prism-light-mul: 1;
+
+  /* ── 精密字号阶梯（最小 10px，杜绝 9/9.5px 发虚） ── */
+  --ag-fs-micro: 10px;   /* 大写等宽微标签 */
+  --ag-fs-caption: 11px; /* 次要说明、时间戳 */
+  --ag-fs-small: 12px;   /* 控件辅助、代码 */
+  --ag-fs-ui: 13px;      /* 主 UI 控件 */
+  --ag-fs-body: 14px;    /* 列表正文、气泡 */
+  --ag-fs-prose: 15px;   /* AI 阅读正文 */
+  --ag-fs-title: 22px;
+  --ag-lh-tight: 1.25;
+  --ag-lh-ui: 1.45;
+  --ag-track-micro: 0.06em; /* 仅西文大写微标签 */
+
+  /* ── 统一动效曲线与时长（同一位工程师调出来的节奏） ── */
+  --ag-ease-out: cubic-bezier(0.16, 1, 0.3, 1);       /* 展开、入场 */
+  --ag-ease-standard: cubic-bezier(0.2, 0, 0, 1);     /* 悬停、状态切换 */
+  --ag-ease-in: cubic-bezier(0.4, 0, 1, 1);           /* 退场 */
+  --ag-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1); /* 仅限微元素回弹 */
+  --ag-dur-1: 120ms;
+  --ag-dur-2: 180ms;
+  --ag-dur-3: 240ms;
+  --ag-dur-4: 320ms;
+
+  font-family: var(--ag-v2-font-sans);
+  color: var(--foreground);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.ag-v2-stage[data-serif="off"] {
+  --ag-v2-display-font: var(--ag-v2-font-sans);
+  --ag-v2-display-tracking: -0.024em;
+  --ag-v2-display-weight: 500;
+}
+
+/* ── Quadrant 1 (FLAGSHIP): Obsidian Neutral · Dark ────────────────────── */
+.ag-v2-stage[data-palette="obsidian"][data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Zero color cast true neutral black/grey titanium */
+  --background: #0e0e11;
+  --content: #0e0e11;
+  --sidebar: #09090b;
+  --surface-1: #151519;
+  --surface-2: #1c1c21;
+  --surface-3: #24242b;
+  --card: #151519;
+
+  --foreground: #f2f2f5;
+  --secondary-foreground: #bdbdc8;
+  --muted-foreground: #8f8f9c;
+  --placeholder: #62626f;
+
+  --primary: #5b89d6;
+  --primary-soft: rgba(91, 137, 214, 0.14);
+  --primary-border: rgba(91, 137, 214, 0.38);
+  --primary-foreground: #ffffff;
+  --link: #7aa7f8;
+
+  --success: #50a37b;
+  --success-soft: rgba(80, 163, 123, 0.14);
+  --warning: #f2b84b;
+  --warning-soft: rgba(242, 184, 75, 0.15);
+  --danger: #e5534b;
+  --danger-soft: rgba(229, 83, 75, 0.15);
+
+  --hover-wash: rgba(255, 255, 255, 0.055);
+  --active-wash: rgba(255, 255, 255, 0.105);
+
+  --border: rgba(255, 255, 255, var(--ag-v2-border-alpha, 0.115));
+  --border-etched: rgba(255, 255, 255, calc(var(--ag-v2-border-alpha, 0.115) * 0.65));
+  --border-subtle: rgba(255, 255, 255, calc(var(--ag-v2-border-alpha, 0.115) * 0.62));
+  --border-strong: rgba(255, 255, 255, calc(var(--ag-v2-border-alpha, 0.115) * 1.75));
+
+  --glass-bg: color-mix(in srgb, #141418 78%, transparent);
+  --popover-bg: color-mix(in srgb, #18181d 91%, transparent);
+  --composer-bg: color-mix(in srgb, #151519 82%, transparent);
+  --code-bg: #09090b;
+  --code-header-bg: rgba(255, 255, 255, 0.028);
+  --user-bubble-bg: rgba(255, 255, 255, 0.052);
+
+  --specular-color: rgba(255, 255, 255, var(--ag-v2-specular, 0.095));
+  /* 三层景深：接触影 + 环境闭塞 + 远景深；顶边 1px 受光 */
+  --elevation-1:
+    inset 0 1px 0 var(--specular-color),
+    0 0 0 0.5px rgba(0, 0, 0, 0.42),
+    0 1px 2px rgba(0, 0, 0, 0.44),
+    0 6px 14px -4px rgba(0, 0, 0, 0.42),
+    0 18px 40px -12px rgba(0, 0, 0, 0.6);
+  --elevation-2:
+    inset 0 1px 0 rgba(255, 255, 255, calc(var(--ag-v2-specular, 0.095) * 1.25)),
+    0 0 0 0.5px rgba(0, 0, 0, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.42),
+    0 10px 24px -6px rgba(0, 0, 0, 0.55),
+    0 30px 60px -14px rgba(0, 0, 0, 0.78);
+  --focus-glow: 0 0 0 3px rgba(91, 137, 214, 0.14);
+
+  /* Quiet neutral silver-grey ASCII ripple floor */
+  --ag-v2-ripple-ink: rgb(146, 148, 156);
+  --ag-v2-ripple-wave: rgb(214, 218, 228);
+
+  /* Low-saturation Slate Cobalt -> Iris heatmap levels (0..5)，0 级退隐 */
+  --ag-v2-heat-0: rgba(255, 255, 255, 0.04);
+  --ag-v2-heat-1: rgba(91, 137, 214, 0.2);
+  --ag-v2-heat-2: rgba(102, 142, 214, 0.38);
+  --ag-v2-heat-3: rgba(118, 134, 218, 0.58);
+  --ag-v2-heat-4: rgba(138, 126, 222, 0.78);
+  --ag-v2-heat-5: rgba(176, 162, 240, 0.94);
+
+  --ag-pool-claude: #5b89d6;
+  --ag-pool-pro: #846dc9;
+  --ag-pool-flash: #629ebd;
+
+  --ag-mascot-coral: #e06c65;
+  --ag-mascot-outline: #23171b;
+  --prism-light-mul: 1;
+
+  /* M3 Expressive 5-Step Tonal Elevation (Obsidian Dark) */
+  --ag-cs-tonal-0: #09090b;
+  --ag-cs-tonal-1: #0e0e11;
+  --ag-cs-tonal-2: #151519;
+  --ag-cs-tonal-3: #1c1c22;
+  --ag-cs-tonal-4: #24242c;
+  --ag-cs-tonal-wash: rgba(255, 255, 255, 0.045);
+  --ag-cs-specular: rgba(255, 255, 255, 0.095);
+  --ag-cs-border-1: rgba(255, 255, 255, 0.068);
+  --ag-cs-border-2: rgba(255, 255, 255, 0.125);
+  --ag-cs-sheen: linear-gradient(172deg, rgba(255, 255, 255, 0.032) 0%, rgba(255, 255, 255, 0) 38%);
+  --ag-cs-bubble-sh: inset 0 1px 0 var(--ag-cs-specular), 0 1px 2px rgba(0, 0, 0, 0.42), 0 8px 20px -6px rgba(0, 0, 0, 0.45);
+  --ag-cs-popover-bg: #1b1b21;
+  --ag-cs-focus-halo-2: 0 0 0 2px rgba(91, 137, 214, 0.28);
+  --ag-cs-diff-add-bg: rgba(52, 168, 83, 0.12);
+  --ag-cs-diff-add-bar: #34a853;
+  --ag-cs-diff-add-word: rgba(52, 168, 83, 0.28);
+  --ag-cs-diff-del-bg: rgba(234, 67, 53, 0.12);
+  --ag-cs-diff-del-bar: #ea4335;
+  --ag-cs-diff-del-word: rgba(234, 67, 53, 0.28);
+}
+
+/* ── Quadrant 2: Daylight Crystal ·的白昼冷晶棱镜 (Default Light) ──────── */
+.ag-v2-stage[data-palette="obsidian"][data-theme="light"] {
+  color-scheme: light;
+
+  --background: #f4f7fb;
+  --content: #f4f7fb;
+  --sidebar: #e8eef6;
+  --surface-1: #ffffff;
+  --surface-2: #edf2f9;
+  --surface-3: #e1e9f4;
+  --card: #ffffff;
+
+  --foreground: #0f172a;
+  --secondary-foreground: #334155;
+  --muted-foreground: #5b6b82;
+  --placeholder: #8392a7;
+
+  --primary: #2563eb;
+  --primary-soft: rgba(37, 99, 235, 0.11);
+  --primary-border: rgba(37, 99, 235, 0.36);
+  --primary-foreground: #ffffff;
+  --link: #1d4ed8;
+
+  --success: #168055;
+  --success-soft: rgba(22, 128, 85, 0.11);
+  --warning: #d97706;
+  --warning-soft: rgba(217, 119, 6, 0.13);
+  --danger: #dc2626;
+  --danger-soft: rgba(220, 38, 38, 0.11);
+
+  --hover-wash: rgba(15, 23, 42, 0.05);
+  --active-wash: rgba(37, 99, 235, 0.085);
+
+  --border: rgba(15, 23, 42, var(--ag-v2-border-alpha, 0.115));
+  --border-etched: rgba(15, 23, 42, calc(var(--ag-v2-border-alpha, 0.115) * 0.72));
+  --border-subtle: rgba(15, 23, 42, calc(var(--ag-v2-border-alpha, 0.115) * 0.68));
+  --border-strong: rgba(15, 23, 42, calc(var(--ag-v2-border-alpha, 0.115) * 1.48));
+
+  --glass-bg: #ffffff;
+  --popover-bg: rgba(255, 255, 255, 0.96);
+  --composer-bg: #ffffff;
+  --code-bg: #edf2f9;
+  --code-header-bg: rgba(15, 23, 42, 0.036);
+  --user-bubble-bg: #eaf1fb;
+
+  --specular-color: rgba(255, 255, 255, 0.96);
+  /* 白昼冷晶：真实双层冷石板微投影 + 清晰矿物描边 */
+  --elevation-1:
+    0 1px 3px rgba(15, 23, 42, 0.06),
+    0 10px 28px -6px rgba(30, 58, 138, 0.10),
+    0 0 0 1px rgba(15, 23, 42, 0.08);
+  --elevation-2:
+    0 2px 6px rgba(15, 23, 42, 0.07),
+    0 18px 42px -10px rgba(30, 58, 138, 0.16),
+    0 0 0 1px rgba(15, 23, 42, 0.10);
+  --focus-glow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+
+  --ag-v2-ripple-ink: rgb(100, 116, 139);
+  --ag-v2-ripple-wave: rgb(37, 99, 235);
+
+  --ag-v2-heat-0: rgba(15, 23, 42, 0.055);
+  --ag-v2-heat-1: rgba(37, 99, 235, 0.22);
+  --ag-v2-heat-2: rgba(37, 99, 235, 0.42);
+  --ag-v2-heat-3: rgba(79, 70, 229, 0.62);
+  --ag-v2-heat-4: rgba(124, 58, 237, 0.82);
+  --ag-v2-heat-5: #6d28d9;
+
+  --ag-pool-claude: #2563eb;
+  --ag-pool-pro: #7c3aed;
+  --ag-pool-flash: #0284c7;
+
+  --ag-mascot-coral: #d9655e;
+  --ag-mascot-outline: #3a2220;
+  --prism-light-mul: 1;
+
+  /* M3 Expressive 5-Step Tonal Elevation (Daylight Crystal) */
+  --ag-cs-tonal-0: #e8eef6;
+  --ag-cs-tonal-1: #f4f7fb;
+  --ag-cs-tonal-2: #ffffff;
+  --ag-cs-tonal-3: #edf2f9;
+  --ag-cs-tonal-4: #ffffff;
+  --ag-cs-tonal-wash: rgba(15, 23, 42, 0.045);
+  --ag-cs-specular: rgba(255, 255, 255, 0.96);
+  --ag-cs-border-1: rgba(15, 23, 42, 0.095);
+  --ag-cs-border-2: rgba(15, 23, 42, 0.16);
+  --ag-cs-sheen: linear-gradient(172deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 40%);
+  --ag-cs-bubble-sh: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 22px -6px rgba(30, 58, 138, 0.09), 0 0 0 1px rgba(15, 23, 42, 0.07);
+  --ag-cs-popover-bg: rgba(255, 255, 255, 0.97);
+  --ag-cs-focus-halo-2: 0 0 0 2px rgba(37, 99, 235, 0.24);
+  --ag-cs-diff-add-bg: rgba(22, 163, 74, 0.10);
+  --ag-cs-diff-add-bar: #16a34a;
+  --ag-cs-diff-add-word: rgba(22, 163, 74, 0.22);
+  --ag-cs-diff-del-bg: rgba(220, 38, 38, 0.09);
+  --ag-cs-diff-del-bar: #dc2626;
+  --ag-cs-diff-del-word: rgba(220, 38, 38, 0.20);
+}
+
+/* ── Quadrant 3 (REF): Titanium Prism · Deep Indigo Dark ───────────────── */
+.ag-v2-stage[data-palette="titanium"][data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #0b0d14;
+  --content: #0b0d14;
+  --sidebar: #080a10;
+  --surface-1: #111522;
+  --surface-2: #161b2a;
+  --surface-3: #1e2438;
+  --card: #111522;
+
+  --foreground: #eef1fa;
+  --secondary-foreground: #c4cae0;
+  --muted-foreground: #9aa3bc;
+  --placeholder: #5e6782;
+
+  --primary: #669df6;
+  --primary-soft: rgba(102, 157, 246, 0.15);
+  --primary-border: rgba(102, 157, 246, 0.4);
+  --primary-foreground: #ffffff;
+  --link: #8ab4f8;
+
+  --success: #46a778;
+  --success-soft: rgba(70, 167, 120, 0.14);
+  --warning: #f2b84b;
+  --warning-soft: rgba(242, 184, 75, 0.15);
+  --danger: #e5534b;
+  --danger-soft: rgba(229, 83, 75, 0.15);
+
+  --hover-wash: rgba(132, 156, 220, 0.08);
+  --active-wash: rgba(132, 156, 220, 0.14);
+
+  --border: rgba(160, 180, 235, calc(var(--ag-v2-border-alpha, 0.115) * 1.15));
+  --border-etched: rgba(148, 168, 224, calc(var(--ag-v2-border-alpha, 0.115) * 0.78));
+  --border-subtle: rgba(148, 168, 224, calc(var(--ag-v2-border-alpha, 0.115) * 0.75));
+  --border-strong: rgba(160, 180, 235, calc(var(--ag-v2-border-alpha, 0.115) * 1.9));
+
+  --glass-bg: color-mix(in srgb, #111522 76%, transparent);
+  --popover-bg: color-mix(in srgb, #141928 88%, transparent);
+  --composer-bg: color-mix(in srgb, #121623 82%, transparent);
+  --code-bg: #080a10;
+  --code-header-bg: rgba(148, 168, 224, 0.036);
+  --user-bubble-bg: rgba(132, 156, 220, 0.075);
+
+  --specular-color: rgba(255, 255, 255, var(--ag-v2-specular, 0.095));
+  --elevation-1:
+    inset 0 1px 0 var(--specular-color),
+    0 1px 2px rgba(2, 4, 10, 0.45),
+    0 12px 32px -6px rgba(2, 4, 12, 0.62);
+  --elevation-2:
+    inset 0 1px 0 rgba(255, 255, 255, calc(var(--ag-v2-specular, 0.095) * 1.25)),
+    0 2px 6px rgba(2, 4, 10, 0.55),
+    0 20px 48px -8px rgba(1, 3, 10, 0.78);
+  --focus-glow: 0 0 0 3px rgba(102, 157, 246, 0.16);
+
+  --ag-v2-ripple-ink: rgb(116, 134, 186);
+  --ag-v2-ripple-wave: rgb(146, 178, 255);
+
+  --ag-v2-heat-0: rgba(148, 168, 224, 0.06);
+  --ag-v2-heat-1: rgba(102, 157, 246, 0.25);
+  --ag-v2-heat-2: rgba(124, 142, 238, 0.46);
+  --ag-v2-heat-3: rgba(148, 126, 232, 0.68);
+  --ag-v2-heat-4: #9b72cb;
+  --ag-v2-heat-5: #b89eff;
+
+  --ag-pool-claude: #669df6;
+  --ag-pool-pro: #a37ee6;
+  --ag-pool-flash: #6ec4e8;
+
+  --ag-mascot-coral: #e06c65;
+  --ag-mascot-outline: #23171b;
+  --prism-light-mul: 1;
+
+  /* M3 Expressive 5-Step Tonal Elevation (Obsidian Dark) */
+  --ag-cs-tonal-0: #09090b;
+  --ag-cs-tonal-1: #0e0e11;
+  --ag-cs-tonal-2: #151519;
+  --ag-cs-tonal-3: #1c1c22;
+  --ag-cs-tonal-4: #24242c;
+  --ag-cs-tonal-wash: rgba(255, 255, 255, 0.045);
+  --ag-cs-specular: rgba(255, 255, 255, 0.095);
+  --ag-cs-border-1: rgba(255, 255, 255, 0.068);
+  --ag-cs-border-2: rgba(255, 255, 255, 0.125);
+  --ag-cs-sheen: linear-gradient(172deg, rgba(255, 255, 255, 0.032) 0%, rgba(255, 255, 255, 0) 38%);
+  --ag-cs-bubble-sh: inset 0 1px 0 var(--ag-cs-specular), 0 1px 2px rgba(0, 0, 0, 0.42), 0 8px 20px -6px rgba(0, 0, 0, 0.45);
+  --ag-cs-popover-bg: #1b1b21;
+  --ag-cs-focus-halo-2: 0 0 0 2px rgba(91, 137, 214, 0.28);
+  --ag-cs-diff-add-bg: rgba(52, 168, 83, 0.12);
+  --ag-cs-diff-add-bar: #34a853;
+  --ag-cs-diff-add-word: rgba(52, 168, 83, 0.28);
+  --ag-cs-diff-del-bg: rgba(234, 67, 53, 0.12);
+  --ag-cs-diff-del-bar: #ea4335;
+  --ag-cs-diff-del-word: rgba(234, 67, 53, 0.28);
+}
+
+/* ── Quadrant 4 (REF): Titanium Prism · Nebula Light ───────────────────── */
+.ag-v2-stage[data-palette="titanium"][data-theme="light"] {
+  color-scheme: light;
+
+  --background: #f6f7fb;
+  --content: #f6f7fb;
+  --sidebar: #eff1f7;
+  --surface-1: #ffffff;
+  --surface-2: #f0f2f8;
+  --surface-3: #e5e8f2;
+  --card: #ffffff;
+
+  --foreground: #141824;
+  --secondary-foreground: #3b4258;
+  --muted-foreground: #4e5770;
+  --placeholder: #8791ab;
+
+  --primary: #3b78e7;
+  --primary-soft: rgba(59, 120, 231, 0.11);
+  --primary-border: rgba(59, 120, 231, 0.34);
+  --primary-foreground: #ffffff;
+  --link: #2563eb;
+
+  --success: #287f57;
+  --success-soft: rgba(40, 127, 87, 0.11);
+  --warning: #d98a16;
+  --warning-soft: rgba(217, 138, 22, 0.13);
+  --danger: #d63b33;
+  --danger-soft: rgba(214, 59, 51, 0.11);
+
+  --hover-wash: rgba(45, 68, 130, 0.06);
+  --active-wash: rgba(45, 68, 130, 0.11);
+
+  --border: rgba(30, 46, 90, calc(var(--ag-v2-border-alpha, 0.115) * 1.05));
+  --border-etched: rgba(30, 46, 90, calc(var(--ag-v2-border-alpha, 0.115) * 0.7));
+  --border-subtle: rgba(30, 46, 90, calc(var(--ag-v2-border-alpha, 0.115) * 0.68));
+  --border-strong: rgba(30, 46, 90, calc(var(--ag-v2-border-alpha, 0.115) * 1.8));
+
+  --glass-bg: color-mix(in srgb, #ffffff 82%, transparent);
+  --popover-bg: color-mix(in srgb, #ffffff 94%, transparent);
+  --composer-bg: color-mix(in srgb, #ffffff 88%, transparent);
+  --code-bg: #eef0f7;
+  --code-header-bg: rgba(30, 46, 90, 0.036);
+  --user-bubble-bg: rgba(68, 84, 132, 0.075);
+
+  --specular-color: rgba(255, 255, 255, 0.9);
+  --elevation-1:
+    inset 0 1px 0 var(--specular-color),
+    0 1px 2px rgba(18, 26, 52, 0.05),
+    0 10px 28px -6px rgba(18, 26, 52, 0.09);
+  --elevation-2:
+    inset 0 1px 0 #ffffff,
+    0 2px 6px rgba(18, 26, 52, 0.07),
+    0 18px 42px -8px rgba(18, 26, 52, 0.14);
+  --focus-glow: 0 0 0 3px rgba(59, 120, 231, 0.14);
+
+  --ag-v2-ripple-ink: rgb(88, 106, 152);
+  --ag-v2-ripple-wave: rgb(76, 125, 246);
+
+  --ag-v2-heat-0: rgba(30, 46, 90, 0.06);
+  --ag-v2-heat-1: rgba(59, 120, 231, 0.22);
+  --ag-v2-heat-2: rgba(59, 120, 231, 0.45);
+  --ag-v2-heat-3: rgba(114, 90, 212, 0.68);
+  --ag-v2-heat-4: #7b55c8;
+  --ag-v2-heat-5: #6440b8;
+
+  --ag-pool-claude: #3b78e7;
+  --ag-pool-pro: #8458d4;
+  --ag-pool-flash: #348cb8;
+
+  --ag-mascot-coral: #d9655e;
+  --ag-mascot-outline: #3a2220;
+  --prism-light-mul: 0.85;
+}
+
+/* ── Quadrant 5 (ALT): Warm Editorial · Dark ───────────────────────────── */
+.ag-v2-stage[data-palette="warm"][data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #141413;
+  --content: #141413;
+  --sidebar: #10100f;
+  --surface-1: #1b1a18;
+  --surface-2: #22201d;
+  --surface-3: #2a2824;
+  --card: #1b1a18;
+
+  --foreground: #f2efe9;
+  --secondary-foreground: #cec8bc;
+  --muted-foreground: #a39e93;
+  --placeholder: #6e6a61;
+
+  --primary: #d97757;
+  --primary-soft: rgba(217, 119, 87, 0.14);
+  --primary-border: rgba(217, 119, 87, 0.36);
+  --primary-foreground: #fffaf7;
+  --link: #e59377;
+
+  --success: #5fa882;
+  --success-soft: rgba(95, 168, 130, 0.14);
+  --warning: #d9a05b;
+  --warning-soft: rgba(217, 160, 91, 0.15);
+  --danger: #e27872;
+  --danger-soft: rgba(226, 120, 114, 0.14);
+
+  --hover-wash: rgba(245, 240, 230, 0.05);
+  --active-wash: rgba(245, 240, 230, 0.085);
+
+  --border: rgba(245, 240, 230, var(--ag-v2-border-alpha, 0.115));
+  --border-etched: rgba(245, 240, 230, calc(var(--ag-v2-border-alpha, 0.115) * 0.65));
+  --border-subtle: rgba(245, 240, 230, calc(var(--ag-v2-border-alpha, 0.115) * 0.62));
+  --border-strong: rgba(245, 240, 230, calc(var(--ag-v2-border-alpha, 0.115) * 1.75));
+  --glass-bg: color-mix(in srgb, #1b1a18 82%, transparent);
+  --popover-bg: color-mix(in srgb, #191816 93%, transparent);
+  --composer-bg: color-mix(in srgb, #1c1b19 86%, transparent);
+  --code-bg: #0f0f0e;
+  --code-header-bg: rgba(245, 240, 230, 0.032);
+  --user-bubble-bg: rgba(245, 240, 230, 0.055);
+
+  --specular-color: rgba(255, 250, 242, var(--ag-v2-specular, 0.095));
+  --elevation-1:
+    inset 0 1px 0 var(--specular-color),
+    0 1px 2px rgba(0, 0, 0, 0.36),
+    0 10px 28px -6px rgba(0, 0, 0, 0.44);
+  --elevation-2:
+    inset 0 1px 0 rgba(255, 250, 242, calc(var(--ag-v2-specular, 0.095) * 1.25)),
+    0 4px 12px rgba(0, 0, 0, 0.45),
+    0 18px 42px -12px rgba(0, 0, 0, 0.62);
+  --focus-glow: 0 0 0 3px rgba(217, 119, 87, 0.14);
+
+  --ag-v2-ripple-ink: rgb(180, 174, 162);
+  --ag-v2-ripple-wave: rgb(217, 119, 87);
+  --ag-v2-heat-0: rgba(245, 240, 230, 0.055);
+  --ag-v2-heat-1: rgba(217, 119, 87, 0.24);
+  --ag-v2-heat-2: rgba(217, 119, 87, 0.44);
+  --ag-v2-heat-3: rgba(217, 119, 87, 0.66);
+  --ag-v2-heat-4: #d97757;
+  --ag-v2-heat-5: #ec9a7e;
+
+  --ag-pool-claude: #d97757;
+  --ag-pool-pro: #c28a52;
+  --ag-pool-flash: #5fa882;
+
+  --ag-mascot-coral: #e06c65;
+  --ag-mascot-outline: #23171b;
+  --prism-light-mul: 1;
+
+  /* M3 Expressive 5-Step Tonal Elevation (Warm Dark) */
+  --ag-cs-tonal-0: #10100f;
+  --ag-cs-tonal-1: #141413;
+  --ag-cs-tonal-2: #1b1a18;
+  --ag-cs-tonal-3: #22201d;
+  --ag-cs-tonal-4: #2a2824;
+  --ag-cs-tonal-wash: rgba(245, 240, 230, 0.048);
+  --ag-cs-specular: rgba(255, 250, 242, 0.09);
+  --ag-cs-border-1: rgba(245, 240, 230, 0.072);
+  --ag-cs-border-2: rgba(245, 240, 230, 0.13);
+  --ag-cs-sheen: linear-gradient(172deg, rgba(255, 250, 242, 0.032) 0%, rgba(255, 250, 242, 0) 38%);
+  --ag-cs-bubble-sh: inset 0 1px 0 var(--ag-cs-specular), 0 1px 2px rgba(0, 0, 0, 0.38), 0 8px 20px -6px rgba(0, 0, 0, 0.44);
+  --ag-cs-popover-bg: #201e1b;
+  --ag-cs-focus-halo-2: 0 0 0 2px rgba(217, 119, 87, 0.28);
+  --ag-cs-diff-add-bg: rgba(95, 168, 130, 0.13);
+  --ag-cs-diff-add-bar: #5fa882;
+  --ag-cs-diff-add-word: rgba(95, 168, 130, 0.28);
+  --ag-cs-diff-del-bg: rgba(226, 120, 114, 0.13);
+  --ag-cs-diff-del-bar: #e27872;
+  --ag-cs-diff-del-word: rgba(226, 120, 114, 0.28);
+}
+
+/* ── Quadrant 6 (ALT): Warm Alabaster · 暖白画册折光 ───────────────────── */
+.ag-v2-stage[data-palette="warm"][data-theme="light"],
+.ag-v2-stage[data-theme="light"][data-light-preset="alabaster"] {
+  color-scheme: light;
+
+  --background: #f6f4ee;
+  --content: #f6f4ee;
+  --sidebar: #ebe6dc;
+  --surface-1: #ffffff;
+  --surface-2: #f1eee5;
+  --surface-3: #e5e0d3;
+  --card: #ffffff;
+
+  --foreground: #181715;
+  --secondary-foreground: #3c3934;
+  --muted-foreground: #625d54;
+  --placeholder: #8f897d;
+
+  --primary: #c96442;
+  --primary-soft: rgba(201, 100, 66, 0.11);
+  --primary-border: rgba(201, 100, 66, 0.36);
+  --primary-foreground: #ffffff;
+  --link: #b85635;
+
+  --success: #2c7a56;
+  --success-soft: rgba(44, 122, 86, 0.11);
+  --warning: #b46d1e;
+  --warning-soft: rgba(180, 109, 30, 0.12);
+  --danger: #c44e47;
+  --danger-soft: rgba(196, 78, 71, 0.11);
+
+  --hover-wash: rgba(42, 32, 20, 0.045);
+  --active-wash: rgba(42, 32, 20, 0.08);
+
+  --border: rgba(42, 32, 20, 0.12);
+  --border-etched: rgba(42, 32, 20, 0.085);
+  --border-subtle: rgba(42, 32, 20, 0.08);
+  --border-strong: rgba(42, 32, 20, 0.18);
+  --glass-bg: #ffffff;
+  --popover-bg: rgba(255, 255, 255, 0.96);
+  --composer-bg: #ffffff;
+  --code-bg: #efeae0;
+  --code-header-bg: rgba(42, 32, 20, 0.036);
+  --user-bubble-bg: #efece2;
+
+  --specular-color: rgba(255, 255, 255, 0.96);
+  --elevation-1:
+    0 1px 3px rgba(42, 32, 20, 0.06),
+    0 10px 26px -6px rgba(68, 52, 32, 0.10),
+    0 0 0 1px rgba(42, 32, 20, 0.08);
+  --elevation-2:
+    0 3px 8px rgba(42, 32, 20, 0.07),
+    0 18px 42px -10px rgba(68, 52, 32, 0.15),
+    0 0 0 1px rgba(42, 32, 20, 0.10);
+  --focus-glow: 0 0 0 3px rgba(201, 100, 66, 0.16);
+
+  --ag-v2-ripple-ink: rgb(118, 110, 96);
+  --ag-v2-ripple-wave: rgb(201, 100, 66);
+  --ag-v2-heat-0: rgba(42, 32, 20, 0.055);
+  --ag-v2-heat-1: rgba(201, 100, 66, 0.22);
+  --ag-v2-heat-2: rgba(201, 100, 66, 0.44);
+  --ag-v2-heat-3: rgba(201, 100, 66, 0.68);
+  --ag-v2-heat-4: #c96442;
+  --ag-v2-heat-5: #ab4e30;
+
+  --ag-pool-claude: #c96442;
+  --ag-pool-pro: #b07428;
+  --ag-pool-flash: #2c7a56;
+
+  --ag-mascot-coral: #d9655e;
+  --ag-mascot-outline: #3a2220;
+  --prism-light-mul: 1;
+
+  /* M3 Expressive 5-Step Tonal Elevation (Warm Alabaster) */
+  --ag-cs-tonal-0: #ebe6dc;
+  --ag-cs-tonal-1: #f6f4ee;
+  --ag-cs-tonal-2: #ffffff;
+  --ag-cs-tonal-3: #f1eee5;
+  --ag-cs-tonal-4: #ffffff;
+  --ag-cs-tonal-wash: rgba(42, 32, 20, 0.045);
+  --ag-cs-specular: rgba(255, 255, 255, 0.96);
+  --ag-cs-border-1: rgba(42, 32, 20, 0.105);
+  --ag-cs-border-2: rgba(42, 32, 20, 0.17);
+  --ag-cs-sheen: linear-gradient(172deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0) 40%);
+  --ag-cs-bubble-sh: 0 1px 3px rgba(42, 32, 20, 0.06), 0 8px 22px -6px rgba(68, 52, 32, 0.10), 0 0 0 1px rgba(42, 32, 20, 0.075);
+  --ag-cs-popover-bg: rgba(255, 255, 255, 0.97);
+  --ag-cs-focus-halo-2: 0 0 0 2px rgba(201, 100, 66, 0.24);
+  --ag-cs-diff-add-bg: rgba(44, 122, 86, 0.10);
+  --ag-cs-diff-add-bar: #2c7a56;
+  --ag-cs-diff-add-word: rgba(44, 122, 86, 0.22);
+  --ag-cs-diff-del-bg: rgba(196, 78, 71, 0.10);
+  --ag-cs-diff-del-bar: #c44e47;
+  --ag-cs-diff-del-word: rgba(196, 78, 71, 0.20);
+}
+
+/* ── 跨调色板通用光学补充 Token（按明暗主题分流） ─────────────────────────── */
+.ag-v2-stage[data-theme="dark"] {
+  /* 顶部 24px 极淡受光渐变：让光线有来向（左上 12°） */
+  --ag-sheen: linear-gradient(172deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0) 38%);
+  /* 底边 1px 极暗蚀刻 */
+  --ag-edge-bottom: inset 0 -1px 0 rgba(0, 0, 0, 0.32);
+  /* Z0 沉降内胆：内凹阴影 */
+  --ag-sunken-inset: inset 0 1px 0 rgba(0, 0, 0, 0.55), inset 0 2px 6px -2px rgba(0, 0, 0, 0.6);
+  --ag-press-shade: rgba(0, 0, 0, 0.18);
+  /* 代码语法色（暗底 ≥ 4.5:1） */
+  --code-fg: #d8d8e0;
+  --code-kw: #8fb4ff;
+  --code-str: #7cc9a0;
+  --code-cm: #6c6c7a;
+  --code-fn: #d6b4ff;
+  --code-num: #f0b979;
+  --code-prop: #9fd0f0;
+  --code-punct: #8b8b98;
+  --ag-scrim: rgba(14, 14, 17, 0.72);
+}
+
+.ag-v2-stage[data-theme="light"] {
+  --ag-sheen: linear-gradient(172deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 40%);
+  --ag-edge-bottom: inset 0 -1px 0 rgba(28, 30, 40, 0.06);
+  --ag-sunken-inset: inset 0 1px 0 rgba(28, 30, 40, 0.06), inset 0 2px 5px -2px rgba(28, 30, 40, 0.1);
+  --ag-press-shade: rgba(28, 30, 40, 0.06);
+  /* 浅底深色语法（≥ 4.5:1） */
+  --code-fg: #26262e;
+  --code-kw: #1f4fae;
+  --code-str: #1c6b47;
+  --code-cm: #7a7a88;
+  --code-fn: #6a3fb8;
+  --code-num: #9a5a08;
+  --code-prop: #1c5f86;
+  --code-punct: #5c5c68;
+  --ag-scrim: rgba(247, 247, 249, 0.78);
+}

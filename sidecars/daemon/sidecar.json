@@ -1,0 +1,11 @@
+{
+  "command": "node",
+  "args": [
+    "--max-semi-space-size=4",
+    "main.mjs"
+  ],
+  "restart_policy": "always",
+  "display_name": "Obsidian Prism Daemon",
+  "description": "Live optical UI injection, reload persistence and on-demand telemetry for Antigravity Prism Light (no self-update, no git sync).",
+  "has_web_ui": false
+}

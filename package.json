@@ -1,0 +1,35 @@
+{
+  "name": "antigravity-prism-light",
+  "version": "1.0.8-light.1",
+  "description": "Antigravity Prism Light: lightweight fork of RMvdesi/obsidian-prism (GPL-3.0) with self-update, add-on downloads, shortcut rewriting, auto-relaunch, env-var writes and conversation archiving removed.",
+  "license": "GPL-3.0-only",
+  "author": "RMvdesi (Obsidian Prism); Light fork by menscho",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "antigravity",
+    "theme",
+    "optical-ui",
+    "spring-motion",
+    "webgl2",
+    "telemetry",
+    "thought-translator"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs test/gates/*.test.mjs",
+    "test:gates": "node scripts/run-tests.mjs --gates",
+    "test:fast": "node scripts/run-tests.mjs --fast",
+    "version:check": "node scripts/bump-version.mjs --check",
+    "compat:probe": "node scripts/probe-host-compat.mjs",
+    "workbench": "node workbench/server.cjs",
+    "inject": "node inject.js",
+    "watch": "node inject.js --watch",
+    "daemon": "node sidecars/daemon/main.mjs",
+    "remove": "node remove.js",
+    "install:plugin": "node tools/install-plugin.cjs --install",
+    "uninstall:plugin": "node tools/install-plugin.cjs --uninstall",
+    "status:plugin": "node tools/install-plugin.cjs --status"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "palette": "obsidian",
+  "theme": "dark",
+  "lightPreset": "crystal",
+  "radiusBase": 6,
+  "specularAlpha": 0.095,
+  "borderAlpha": 0.115,
+  "glassBlur": 20,
+  "proseLineHeight": 1.7,
+  "editorialSerif": true,
+  "grainAlpha": 0.022,
+  "prismStrength": 1
+}

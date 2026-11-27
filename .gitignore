@@ -1,0 +1,39 @@
+node_modules/
+dist/
+coverage/
+i18n-work/
+.antigravity/
+installer.exe
+*.exe
+*.dmg
+*.app/
+Antigravity Prism.app/
+Obsidian Prism.app/
+*.log
+*.tmp
+.watch.pid
+.daemon.pid
+.bundle-cache.json
+config.json
+repo-meta.json
+.env
+.env.*
+*.pem
+*.key
+.DS_Store
+Thumbs.db
+*.agcs-staged*
+*.prism-staged*
+
+# IDE / C# build artifacts
+bin/
+obj/
+*.pdb
+.vs/
+*.user
+*.suo
+
+# Internal audit drafts & editor backups
+docs/audit/
+*.bak
+*.swp

@@ -1,0 +1,7 @@
+{
+  "name": "obsidian-prism",
+  "displayName": "Antigravity Prism Light",
+  "description": "Lightweight, cleaned-up fork of Obsidian Prism: optical themes and UI for Antigravity with no self-update, no remote code and no shortcut rewriting.",
+  "version": "1.0.8-light.1",
+  "logo": "assets/logo.svg"
+}

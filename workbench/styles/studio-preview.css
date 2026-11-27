@@ -1,0 +1,2554 @@
+/* ==========================================================================
+   Obsidian Prism v1.0.2 — Bipolar Studio (/studio) Google 官方级美学与 M3 Expressive 视觉层
+   - 对标：Google Material 3 Expressive (2025–2026) × Gemini Web Neural Expressive × antigravity.google
+   - 表面：四套全局主题 M3 Tonal Surface 明度阶梯（去硬边框，明度与微光塑形）
+   - 动效：Spatial Spring 空间微弹 + Effect Spring 丝滑过渡 + Shape Morphing 按压微形变
+   ========================================================================== */
+
+@property --st-halo-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 120deg;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0e0f12;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.st-shell-root {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Google Sans Flex', 'Google Sans', 'SF Pro Text', 'Segoe UI Variable Text', 'PingFang SC', 'Microsoft YaHei UI', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e3e3e3;
+}
+
+/* ── 顶部开发者调试条（1280px 单行零重叠、零遮挡） ────────────────────── */
+.st-devbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  flex-shrink: 0;
+  background: #0b0b0e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  font-size: 12px;
+  z-index: 30;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.st-devbar::-webkit-scrollbar {
+  display: none;
+}
+
+.st-dev-left,
+.st-dev-mid,
+.st-dev-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.st-back-link {
+  color: #9e9eae;
+  text-decoration: none;
+  padding: 3px 7px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.st-back-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f2f2f5;
+}
+
+.st-dev-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #f2f2f5;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.st-sandbox-chip {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  color: #bdbdc8;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 92px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.st-pill-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.st-pill-btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #9b9baa;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.st-pill-btn:hover {
+  color: #f2f2f5;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.st-pill-btn[data-active="1"] {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.st-dev-select {
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #141419;
+  color: #e4e4ec;
+  font-size: 11px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.st-btn-danger {
+  border-color: rgba(229, 83, 75, 0.32);
+  color: #f07d76;
+}
+
+.st-btn-danger:hover {
+  background: rgba(229, 83, 75, 0.16);
+  border-color: #e5534b;
+  color: #ff9c96;
+}
+
+.st-audit-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 25px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  background: rgba(80, 163, 123, 0.14);
+  color: #63c798;
+  border: 1px solid rgba(80, 163, 123, 0.38);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.st-audit-pill[data-status="violated"] {
+  background: rgba(229, 83, 75, 0.16);
+  color: #f07d76;
+  border-color: rgba(229, 83, 75, 0.5);
+}
+
+.st-audit-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* ── 主工作区网格 ─────────────────────────────────────────────────────── */
+.st-workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 296px;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.st-workspace-grid[data-audit-open="0"] {
+  grid-template-columns: minmax(0, 1fr) 0px;
+}
+
+.st-workspace-grid[data-audit-open="0"] .st-audit-drawer {
+  display: none;
+}
+
+/* ── 1:1 现役 Obsidian Prism 舞台 + Google M3 Tonal Surface 四主题色阶矩阵 ── */
+.st-prism-stage {
+  /* M3 Expressive 物理曲线 & 本地零外网可变几何无衬线字体栈 */
+  --st-font-display: 'Google Sans Flex', 'Google Sans', 'SF Pro Display', 'Segoe UI Variable Display', 'PingFang SC', 'Microsoft YaHei UI', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --st-spring-spatial: cubic-bezier(0.34, 1.24, 0.64, 1);
+  --st-spring-effect: cubic-bezier(0.2, 0, 0, 1);
+
+  /* 默认 Obsidian Dark（严格对标 Gemini Web Dark #131314 / #1E1F20 / #282A2C） */
+  --st-sb-bg: #0e0f12;
+  --st-canvas-bg: #131314;
+  --st-surface-container: #1e1f20;
+  --st-surface-tray: #18191b;
+  --st-surface-high: #282a2c;
+  --st-surface-popover: rgba(30, 31, 32, 0.94);
+  --st-hairline: rgba(255, 255, 255, 0.045);
+  --st-top-specular: rgba(255, 255, 255, 0.075);
+  --st-hover-wash: rgba(255, 255, 255, 0.055);
+  --st-pill-track: rgba(255, 255, 255, 0.045);
+  --st-pill-thumb: rgba(255, 255, 255, 0.115);
+  --st-active-pill: rgba(168, 199, 250, 0.11);
+  --st-active-anchor: #8ab4f8;
+  --st-active-text: #e8f0fe;
+  --st-fg: #e3e3e3;
+  --st-fg-muted: #c4c7c5;
+  --st-fg-dim: #8e918f;
+  --st-send-idle-bg: rgba(255, 255, 255, 0.08);
+  --st-send-idle-fg: rgba(227, 227, 227, 0.36);
+  --st-send-ready-bg: #e3e3e3;
+  --st-send-ready-fg: #131314;
+  --st-vessel-shadow: 0 14px 40px rgba(0, 0, 0, 0.34), 0 2px 10px rgba(0, 0, 0, 0.20);
+  --st-vessel-focus-shadow: 0 18px 48px rgba(0, 0, 0, 0.42), 0 4px 16px rgba(0, 0, 0, 0.24);
+  --st-canvas-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
+
+  position: relative;
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--st-fg);
+}
+
+/* Warm Dark（暖黑曜石炭棕 M3 色阶） */
+.st-prism-stage[data-palette="warm"][data-theme="dark"] {
+  --st-sb-bg: #110f0e;
+  --st-canvas-bg: #161412;
+  --st-surface-container: #211e1b;
+  --st-surface-tray: #1b1917;
+  --st-surface-high: #2c2824;
+  --st-surface-popover: rgba(33, 30, 27, 0.95);
+  --st-hairline: rgba(255, 245, 235, 0.055);
+  --st-top-specular: rgba(255, 245, 235, 0.08);
+  --st-hover-wash: rgba(255, 245, 235, 0.055);
+  --st-pill-track: rgba(255, 245, 235, 0.048);
+  --st-pill-thumb: rgba(255, 245, 235, 0.12);
+  --st-active-pill: rgba(232, 199, 165, 0.11);
+  --st-active-anchor: #e6b88a;
+  --st-active-text: #f5efe8;
+  --st-fg: #efece7;
+  --st-fg-muted: #bdb6ae;
+  --st-fg-dim: #8d867e;
+  --st-send-idle-bg: rgba(239, 236, 231, 0.08);
+  --st-send-idle-fg: rgba(239, 236, 231, 0.36);
+  --st-send-ready-bg: #efece7;
+  --st-send-ready-fg: #161412;
+}
+
+/* Daylight Crystal（严格对标 Gemini Light 官方纯净白底 #FFFFFF + 天蓝灰容器 #F0F4F9） */
+.st-prism-stage[data-theme="light"] {
+  --st-sb-bg: #f4f7fc;
+  --st-canvas-bg: #ffffff;
+  --st-surface-container: #f0f4f9;
+  --st-surface-tray: #e7edf6;
+  --st-surface-high: #e2e9f3;
+  --st-surface-popover: rgba(255, 255, 255, 0.96);
+  --st-hairline: rgba(15, 23, 42, 0.065);
+  --st-top-specular: rgba(255, 255, 255, 0.92);
+  --st-hover-wash: rgba(15, 23, 42, 0.05);
+  --st-pill-track: rgba(15, 23, 42, 0.055);
+  --st-pill-thumb: #ffffff;
+  --st-active-pill: rgba(11, 87, 208, 0.09);
+  --st-active-anchor: #0b57d0;
+  --st-active-text: #0842a0;
+  --st-fg: #1f1f1f;
+  --st-fg-muted: #444746;
+  --st-fg-dim: #747775;
+  --st-send-idle-bg: rgba(15, 23, 42, 0.075);
+  --st-send-idle-fg: rgba(15, 23, 42, 0.34);
+  --st-send-ready-bg: #1f1f1f;
+  --st-send-ready-fg: #ffffff;
+  --st-vessel-shadow: 0 8px 28px rgba(15, 23, 42, 0.065), 0 1px 4px rgba(15, 23, 42, 0.04);
+  --st-vessel-focus-shadow: 0 12px 36px rgba(11, 87, 208, 0.095), 0 2px 8px rgba(15, 23, 42, 0.05);
+  --st-canvas-shadow: 0 8px 28px rgba(15, 23, 42, 0.07);
+}
+
+/* Warm Alabaster（纸张米白阅读舱 M3 色阶） */
+.st-prism-stage[data-palette="warm"][data-theme="light"] {
+  --st-sb-bg: #f3efe8;
+  --st-canvas-bg: #faf8f5;
+  --st-surface-container: #f1ede6;
+  --st-surface-tray: #eae4da;
+  --st-surface-high: #e5ddd2;
+  --st-surface-popover: rgba(250, 248, 245, 0.96);
+  --st-hairline: rgba(68, 48, 30, 0.075);
+  --st-top-specular: rgba(255, 253, 249, 0.9);
+  --st-hover-wash: rgba(68, 48, 30, 0.055);
+  --st-pill-track: rgba(68, 48, 30, 0.06);
+  --st-pill-thumb: #fdfbf8;
+  --st-active-pill: rgba(180, 104, 58, 0.095);
+  --st-active-anchor: #b4683a;
+  --st-active-text: #5c2e14;
+  --st-fg: #1f1d1a;
+  --st-fg-muted: #524c44;
+  --st-fg-dim: #80786e;
+  --st-send-idle-bg: rgba(31, 29, 26, 0.075);
+  --st-send-idle-fg: rgba(31, 29, 26, 0.34);
+  --st-send-ready-bg: #1f1d1a;
+  --st-send-ready-fg: #faf8f5;
+}
+
+.st-host-sidebar-outer {
+  /* 1:1 还原 Antigravity 真机 display: block 侧栏父壳，验证 height: 100% 0 塌陷 */
+  --ag-sidebar-w: 256px;
+  display: block;
+  width: 256px;
+  min-width: 256px;
+  max-width: 256px;
+  height: 100%;
+  flex: 0 0 256px;
+  background: var(--st-sb-bg);
+  border-right: 1px solid var(--st-hairline);
+  overflow: hidden;
+  transition: width 280ms var(--st-spring-spatial), min-width 280ms var(--st-spring-spatial), max-width 280ms var(--st-spring-spatial), flex-basis 280ms var(--st-spring-spatial), background-color 220ms var(--st-spring-effect);
+}
+
+.st-prism-stage .st-prism-main {
+  background: var(--st-canvas-bg);
+  transition: background-color 220ms var(--st-spring-effect);
+}
+
+.st-sidebar-height-guard > aside[data-testid="sidebar-split"] {
+  background: transparent !important;
+  border-right: none !important;
+}
+
+.st-sidebar-height-guard .ag-v2-sidebar-footer-wrap {
+  border-top: 1px solid var(--st-hairline) !important;
+  padding: 6px 8px 8px !important;
+}
+
+.st-sidebar-height-guard .ag-v2-sidebar-footer {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+  color: var(--st-fg-dim) !important;
+  transition: background-color 160ms var(--st-spring-effect), color 160ms var(--st-spring-effect), transform 140ms var(--st-spring-spatial) !important;
+}
+
+.st-sidebar-height-guard .ag-v2-sidebar-footer:hover {
+  background: var(--st-hover-wash) !important;
+  color: var(--st-fg) !important;
+}
+
+.st-sidebar-height-guard .ag-v2-sidebar-footer:active {
+  transform: scale(0.975);
+}
+
+/* 侧栏活跃会话行：Google M3 柔光胶囊 + 极细 2.5px 柔光左锚点（Code & Chat 和谐统一） */
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"] {
+  border-radius: 12px !important;
+  transition: background-color 160ms var(--st-spring-effect), color 160ms var(--st-spring-effect), transform 140ms var(--st-spring-spatial) !important;
+}
+
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"]:hover {
+  background: var(--st-hover-wash) !important;
+}
+
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"]:active {
+  transform: scale(0.985);
+}
+
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"][data-active="true"],
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"][aria-current="page"] {
+  background: var(--st-active-pill) !important;
+  box-shadow: none !important;
+}
+
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"][data-active="true"] .ag-v2-row-title,
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"][aria-current="page"] .ag-v2-row-title {
+  color: var(--st-active-text) !important;
+  font-weight: 500 !important;
+}
+
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"][data-active="true"]::before,
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"][aria-current="page"]::before {
+  width: 2.5px !important;
+  border-radius: 999px !important;
+  background: var(--st-active-anchor) !important;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--st-active-anchor) 55%, transparent) !important;
+}
+
+/* 侧栏新建按钮：M3 极简无框微弹 */
+.st-sidebar-height-guard button[data-testid="new-conversation-btn"] {
+  border: none !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  color: var(--st-fg-muted) !important;
+  transition: background-color 160ms var(--st-spring-effect), color 160ms var(--st-spring-effect), transform 150ms var(--st-spring-spatial) !important;
+}
+
+.st-sidebar-height-guard button[data-testid="new-conversation-btn"]:hover {
+  background: var(--st-hover-wash) !important;
+  color: var(--st-fg) !important;
+}
+
+.st-sidebar-height-guard button[data-testid="new-conversation-btn"]:active {
+  transform: scale(0.975);
+}
+
+.st-prism-stage[data-sidebar-collapsed="1"] .st-host-sidebar-outer {
+  width: 52px;
+  min-width: 52px;
+  max-width: 52px;
+  flex: 0 0 52px;
+}
+
+.st-sidebar-height-guard {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.st-sidebar-height-guard > aside[data-testid="sidebar-split"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 100% !important;
+  flex: none !important;
+}
+
+/* 展开态锁定内部内容最小宽度 256px，配合外层 overflow-x: hidden 确保从 52px 微轨展开过渡中段零文字挤压折行 */
+.st-sidebar-height-guard > aside[data-testid="sidebar-split"][data-collapsed="false"] {
+  width: 256px !important;
+  min-width: 256px !important;
+}
+
+.st-sidebar-height-guard > aside[data-testid="sidebar-split"][data-collapsed="false"] .ag-v2-sidebar-top,
+.st-sidebar-height-guard > aside[data-testid="sidebar-split"][data-collapsed="false"] .st-sidebar-exp-body {
+  width: 256px;
+  min-width: 256px;
+  box-sizing: border-box;
+}
+
+/* 侧栏顶行留足呼吸空间，确保搜索/折叠按钮绝不被挤压裁切 */
+.st-sidebar-height-guard .ag-v2-sidebar-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px 6px;
+}
+
+.st-sidebar-height-guard .ag-v2-sidebar-top .ag-v2-rail-btn {
+  width: 26px;
+  height: 26px;
+  border: none !important;
+  background: transparent;
+  border-radius: 999px;
+  flex-shrink: 0;
+  transition: background-color 150ms var(--st-spring-effect), transform 150ms var(--st-spring-spatial), border-radius 150ms var(--st-spring-spatial);
+}
+
+.st-sidebar-height-guard .ag-v2-sidebar-top .ag-v2-rail-btn:hover {
+  background: var(--st-hover-wash);
+}
+
+.st-sidebar-height-guard .ag-v2-sidebar-top .ag-v2-rail-btn:active {
+  transform: scale(0.92);
+  border-radius: 8px;
+}
+
+/* ── Antigravity 失重无边框双极药丸切换器（M3 Expressive 空间弹簧滑块） ──── */
+.st-bipolar-seg {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 3px;
+  border-radius: 999px;
+  border: none;
+  background: var(--st-pill-track);
+  box-shadow: none;
+}
+
+.st-bipolar-slider {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 999px;
+  border: none;
+  background: var(--st-pill-thumb);
+  box-shadow: inset 0 1px 0 var(--st-top-specular), 0 2px 8px rgba(0, 0, 0, 0.20);
+  transform: translate3d(0, 0, 0);
+  transition: transform 260ms var(--st-spring-spatial);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.st-prism-stage[data-theme="light"] .st-bipolar-slider {
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.st-bipolar-seg[data-active-mode="chat"] .st-bipolar-slider {
+  transform: translate3d(100%, 0, 0);
+}
+
+.st-bipolar-btn {
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--st-fg-dim);
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 160ms var(--st-spring-effect), transform 140ms var(--st-spring-spatial);
+}
+
+.st-bipolar-btn:hover,
+.st-bipolar-btn[data-active="1"] {
+  color: var(--st-fg);
+}
+
+.st-bipolar-btn:active {
+  transform: scale(0.95);
+}
+
+/* 3 大点睛锚点之一：后台任务微光点（Blocked 琥珀 / Running 蓝） */
+.st-bg-dot {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  cursor: pointer;
+  animation: st-badge-pop 220ms cubic-bezier(0.22, 1.08, 0.36, 1), st-breathe 1.7s ease-in-out infinite;
+}
+
+.st-bg-dot[data-status="running"] {
+  background: #4c8df6;
+  box-shadow: 0 0 8px rgba(76, 141, 246, 0.72);
+}
+
+.st-bg-dot[data-status="blocked"] {
+  background: #f2b84b;
+  box-shadow: 0 0 8px rgba(242, 184, 75, 0.85);
+}
+
+@keyframes st-badge-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes st-breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.62; transform: scale(0.86); }
+}
+
+/* 侧栏定向水平交叉淡变（Code -> Chat -8px / Chat -> Code +8px） */
+.st-sidebar-transition-to-chat {
+  animation: st-sb-enter-chat 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.st-sidebar-transition-to-code {
+  animation: st-sb-enter-code 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes st-sb-enter-chat {
+  from { opacity: 0; transform: translate3d(8px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes st-sb-enter-code {
+  from { opacity: 0; transform: translate3d(-8px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* 侧栏三阶极简排印：一级分区(最轻) -> 二级文件夹/项目(次清晰) -> 三级对话名(最清晰) */
+.st-sec-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 10px 8px 4px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+  color: rgba(226, 232, 240, 0.44);
+}
+
+.st-prism-stage[data-theme="light"] .st-sec-head-row {
+  color: rgba(15, 23, 42, 0.46);
+}
+
+.st-sec-head-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.st-sec-head-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.st-sec-count,
+.st-group-count {
+  font-size: 10.5px;
+  font-weight: 450;
+  font-variant-numeric: tabular-nums;
+  color: rgba(226, 232, 240, 0.34);
+  margin-left: auto;
+  padding-left: 6px;
+  flex-shrink: 0;
+}
+
+.st-prism-stage[data-theme="light"] .st-sec-count,
+.st-prism-stage[data-theme="light"] .st-group-count {
+  color: rgba(15, 23, 42, 0.38);
+}
+
+.st-group-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.st-sec-hover-add {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-foreground);
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.38;
+  transition: opacity 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.st-sec-head-row:hover .st-sec-hover-add,
+.st-sec-hover-add:focus-visible,
+.st-sec-hover-add[data-open="1"] {
+  opacity: 1;
+}
+
+.st-sec-hover-add:hover {
+  background: var(--hover-wash);
+  color: var(--foreground);
+}
+
+.st-inline-create-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 200ms cubic-bezier(0.16, 1, 0.3, 1), opacity 180ms ease;
+}
+
+.st-inline-create-grid[data-open="1"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.st-inline-create-inner {
+  overflow: hidden;
+  padding: 0 6px;
+}
+
+.st-inline-create-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 3px 0 5px;
+  padding: 4px 8px;
+  border-radius: var(--ag-v2-r-sm);
+  background: var(--surface-1);
+  border: 1px solid var(--border-strong);
+}
+
+.st-inline-create-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.st-inline-create-input::placeholder {
+  color: var(--placeholder);
+}
+
+/* 侧栏文件夹/项目组头部 + 拖拽磁吸高亮 + 320ms 落位确认高光 */
+.st-group-head-wrap {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 4px 0 2px;
+  border-radius: var(--ag-v2-r-sm);
+  border: 1px solid transparent;
+  transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+.st-group-head-wrap > .ag-v2-sidebar-group-head {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.st-prism-stage[data-theme="light"] .st-group-head-wrap > .ag-v2-sidebar-group-head {
+  color: rgba(15, 23, 42, 0.72);
+}
+
+.st-group-head-wrap > .ag-v2-sidebar-group-head:hover {
+  color: var(--foreground);
+}
+
+.st-sidebar-height-guard button[data-testid="conversation-row-sidebar"] .ag-v2-row-title {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--foreground);
+}
+
+.st-chev-ico {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: rotate(90deg);
+}
+
+.ag-v2-sidebar-group[data-group-collapsed="true"] .st-chev-ico {
+  transform: rotate(0deg);
+}
+
+.st-group-head-wrap[data-drop-hover="1"],
+.st-root-drop-zone[data-drop-hover="1"] {
+  border-color: var(--border-strong);
+  background: color-mix(in srgb, var(--foreground) 4.5%, transparent);
+  transform: translate3d(2px, 0, 0);
+}
+
+.st-drop-flash {
+  animation: st-drop-confirm 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes st-drop-confirm {
+  0% { background: color-mix(in srgb, var(--primary) 22%, transparent); }
+  100% { background: transparent; }
+}
+
+button[data-testid="conversation-row-sidebar"][data-dragging="1"] {
+  opacity: 0.42;
+}
+
+.st-drag-ghost {
+  position: fixed;
+  z-index: 9600;
+  pointer-events: none;
+  padding: 5px 10px;
+  border-radius: 7px;
+  background: var(--popover-bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--elevation-2);
+  backdrop-filter: blur(12px);
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.st-group-inline-acts {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.st-group-head-wrap:hover .st-group-inline-acts {
+  opacity: 1;
+}
+
+.st-mini-gbtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--muted-foreground);
+  padding: 2px 4px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  cursor: pointer;
+}
+
+.st-mini-gbtn:hover {
+  background: var(--active-wash);
+  color: var(--foreground);
+}
+
+.st-row-mono-tag {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.st-row-amber-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #f2b84b;
+  box-shadow: 0 0 6px rgba(242, 184, 75, 0.8);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.st-sb-empty {
+  padding: 8px 10px;
+  font-size: 11.5px;
+  color: var(--placeholder);
+}
+
+/* 52px 4 槽单色极简微轨（展开↔折叠 160ms 交叉淡变防折行） */
+.st-rail-4slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px 0;
+  gap: 8px;
+}
+
+.st-rail-tasks {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.st-rail-task-dot {
+  appearance: none;
+  border: none;
+  background: transparent;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.st-rail-task-dot:hover {
+  background: var(--hover-wash);
+}
+
+.st-rail-dot-core {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+}
+
+.st-rail-dot-core[data-status="blocked"] {
+  background: #f2b84b;
+  box-shadow: 0 0 8px rgba(242, 184, 75, 0.82);
+}
+
+.st-rail-dot-core[data-status="running"] {
+  background: #4c8df6;
+  box-shadow: 0 0 8px rgba(76, 141, 246, 0.72);
+}
+
+/* ── Chat 专属纯净双相光场（零混色发脏）+ 聚焦柔和聚拢 ───────────────────── */
+.st-chat-aura-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1);
+  filter: brightness(1);
+  transition: opacity 420ms var(--st-spring-effect), transform 480ms var(--st-spring-effect), filter 420ms var(--st-spring-effect);
+  will-change: opacity, transform;
+}
+
+.st-chat-aura-layer[data-phase="off"] {
+  opacity: 0;
+}
+
+.st-chat-aura-layer:not([data-phase="off"]) {
+  opacity: 1;
+}
+
+/* 聚焦打字时柔和向中心聚拢并轻度提亮，绝不生硬整体放大 */
+.st-chat-aura-layer:not([data-phase="off"])[data-composer-focused="1"] {
+  transform: scale(0.955);
+  filter: brightness(1.13) saturate(1.06);
+}
+
+.st-chat-aura-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(96px);
+  will-change: transform, opacity;
+  transition: top 460ms var(--st-spring-effect), left 460ms var(--st-spring-effect), opacity 380ms var(--st-spring-effect);
+}
+
+/* Knowledge 新建页：真实 Gemini 网页端纯净深钴蓝 → 纯青蓝极光（零紫/红/泥巴灰杂质） */
+.st-chat-aura-layer[data-phase="home-knowledge"] .st-aura-orb-a {
+  width: 680px;
+  height: 410px;
+  left: calc(50% - 370px);
+  top: calc(50% - 245px);
+  background: radial-gradient(circle at 42% 48%, rgba(37, 99, 235, 0.36) 0%, rgba(49, 134, 255, 0.20) 44%, rgba(14, 165, 233, 0.08) 68%, transparent 78%);
+  animation: st-aura-breathe-core 8s ease-in-out infinite;
+}
+
+.st-chat-aura-layer[data-phase="home-knowledge"] .st-aura-orb-b {
+  width: 600px;
+  height: 360px;
+  left: calc(50% - 200px);
+  top: calc(50% - 170px);
+  background: radial-gradient(circle at 55% 50%, rgba(0, 180, 216, 0.27) 0%, rgba(8, 145, 178, 0.16) 46%, rgba(16, 185, 129, 0.07) 68%, transparent 78%);
+  animation: st-aura-orbit-lobe 11.5s ease-in-out infinite alternate;
+}
+
+.st-chat-aura-layer[data-phase="home-knowledge"] .st-aura-orb-c {
+  width: 460px;
+  height: 270px;
+  left: calc(50% - 230px);
+  top: calc(50% - 140px);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.13) 0%, rgba(49, 134, 255, 0.14) 52%, transparent 76%);
+  animation: st-aura-drift-c 9.5s ease-in-out infinite alternate;
+}
+
+/* Spark 新建页：antigravity.google 澄澈电光蓝主核（彻底消除黄绿红暗底混色发脏；棱镜微光收敛于边缘丝绸流光） */
+.st-chat-aura-layer[data-phase="home-spark"] .st-aura-orb-a {
+  width: 700px;
+  height: 420px;
+  left: calc(50% - 360px);
+  top: calc(50% - 245px);
+  background: radial-gradient(circle at 46% 48%, rgba(50, 121, 249, 0.40) 0%, rgba(37, 99, 235, 0.22) 45%, rgba(29, 78, 216, 0.09) 68%, transparent 78%);
+  animation: st-aura-breathe-core 8s ease-in-out infinite;
+}
+
+.st-chat-aura-layer[data-phase="home-spark"] .st-aura-orb-b {
+  width: 580px;
+  height: 350px;
+  left: calc(50% - 185px);
+  top: calc(50% - 160px);
+  background: radial-gradient(circle at 52% 48%, rgba(96, 165, 250, 0.24) 0%, rgba(56, 189, 248, 0.15) 48%, transparent 76%);
+  animation: st-aura-orbit-lobe 11.5s ease-in-out infinite alternate;
+}
+
+.st-chat-aura-layer[data-phase="home-spark"] .st-aura-orb-c {
+  width: 480px;
+  height: 280px;
+  left: calc(50% - 305px);
+  top: calc(50% - 125px);
+  background: radial-gradient(circle at 50% 50%, rgba(29, 78, 216, 0.24) 0%, rgba(50, 121, 249, 0.14) 52%, transparent 78%);
+  animation: st-aura-drift-c 9.5s ease-in-out infinite alternate;
+}
+
+/* 对话态底部宽域纯净极光带（Knowledge 钴蓝→纯青） */
+.st-chat-aura-layer[data-phase="conv-idle"] .st-aura-orb-a,
+.st-chat-aura-layer[data-phase="conv-running"] .st-aura-orb-a {
+  width: 58%;
+  height: 245px;
+  left: 8%;
+  top: calc(100% - 165px);
+  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.30) 0%, rgba(49, 134, 255, 0.16) 52%, transparent 78%);
+  animation: st-aura-breathe-core 8s ease-in-out infinite;
+}
+
+.st-chat-aura-layer[data-phase="conv-idle"] .st-aura-orb-b,
+.st-chat-aura-layer[data-phase="conv-running"] .st-aura-orb-b {
+  width: 56%;
+  height: 235px;
+  left: 36%;
+  top: calc(100% - 160px);
+  background: radial-gradient(ellipse at center, rgba(0, 180, 216, 0.24) 0%, rgba(8, 145, 178, 0.14) 54%, transparent 78%);
+  animation: st-aura-orbit-lobe 11.5s ease-in-out infinite alternate;
+}
+
+.st-chat-aura-layer[data-phase="conv-idle"] .st-aura-orb-c,
+.st-chat-aura-layer[data-phase="conv-running"] .st-aura-orb-c {
+  width: 46%;
+  height: 205px;
+  left: 26%;
+  top: calc(100% - 135px);
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.13) 0%, rgba(49, 134, 255, 0.12) 56%, transparent 78%);
+  animation: st-aura-drift-c 9.5s ease-in-out infinite alternate;
+}
+
+/* Spark 会话底部：澄澈电光蓝 + 晴空天蓝（零暗浊混色） */
+.st-chat-aura-layer[data-space-kind="spark"][data-phase="conv-idle"] .st-aura-orb-a,
+.st-chat-aura-layer[data-space-kind="spark"][data-phase="conv-running"] .st-aura-orb-a {
+  background: radial-gradient(ellipse at center, rgba(50, 121, 249, 0.34) 0%, rgba(37, 99, 235, 0.18) 54%, transparent 78%);
+}
+
+.st-chat-aura-layer[data-space-kind="spark"][data-phase="conv-idle"] .st-aura-orb-b,
+.st-chat-aura-layer[data-space-kind="spark"][data-phase="conv-running"] .st-aura-orb-b {
+  background: radial-gradient(ellipse at center, rgba(96, 165, 250, 0.22) 0%, rgba(56, 189, 248, 0.14) 54%, transparent 78%);
+}
+
+.st-chat-aura-layer[data-space-kind="spark"][data-phase="conv-idle"] .st-aura-orb-c,
+.st-chat-aura-layer[data-space-kind="spark"][data-phase="conv-running"] .st-aura-orb-c {
+  background: radial-gradient(ellipse at center, rgba(29, 78, 216, 0.20) 0%, rgba(50, 121, 249, 0.14) 56%, transparent 78%);
+}
+
+/* 对话运行态：平滑提速至 3.6s 活跃流转并微微提亮 */
+.st-chat-aura-layer[data-phase="conv-running"] .st-chat-aura-orb {
+  animation-duration: 3.6s !important;
+  filter: blur(82px) brightness(1.15);
+}
+
+/* 浅色主题提纯：高明度冰蓝/薄荷青轻雾光层（透亮如空气，绝不发灰脏） */
+.st-prism-stage[data-theme="light"] .st-chat-aura-orb {
+  filter: blur(100px) saturate(1.05);
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="home-knowledge"] .st-aura-orb-a,
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="conv-idle"] .st-aura-orb-a,
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="conv-running"] .st-aura-orb-a {
+  background: radial-gradient(circle at 44% 48%, rgba(59, 130, 246, 0.18) 0%, rgba(96, 165, 250, 0.11) 48%, transparent 76%);
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="home-knowledge"] .st-aura-orb-b,
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="conv-idle"] .st-aura-orb-b,
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="conv-running"] .st-aura-orb-b {
+  background: radial-gradient(circle at 54% 50%, rgba(20, 184, 166, 0.15) 0%, rgba(56, 189, 248, 0.09) 52%, transparent 76%);
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="home-knowledge"] .st-aura-orb-c,
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="conv-idle"] .st-aura-orb-c,
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="conv-running"] .st-aura-orb-c {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.13) 0%, rgba(59, 130, 246, 0.08) 56%, transparent 76%);
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="home-spark"] .st-aura-orb-a {
+  background: radial-gradient(circle at 46% 48%, rgba(50, 121, 249, 0.19) 0%, rgba(96, 165, 250, 0.11) 50%, transparent 76%);
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="home-spark"] .st-aura-orb-b {
+  background: radial-gradient(circle at 52% 48%, rgba(56, 189, 248, 0.15) 0%, rgba(147, 197, 253, 0.10) 52%, transparent 76%);
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-aura-layer[data-phase="home-spark"] .st-aura-orb-c {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, rgba(50, 121, 249, 0.09) 56%, transparent 76%);
+}
+
+/* 2% 抗色带胶片微噪点（彻底消除同心色阶环） */
+.st-chat-aura-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.022;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.7) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-aura-grain {
+  opacity: 0.014;
+}
+
+.st-chat-aura-layer[data-paused="1"] .st-chat-aura-orb {
+  animation-play-state: paused !important;
+}
+
+/* 双层异步呼吸：主光核 7.5s 潮汐伸缩 scale(0.92 <-> 1.09) + opacity(0.72 <-> 1.0) */
+@keyframes st-aura-breathe-core {
+  0%, 100% {
+    opacity: 0.72;
+    transform: translate3d(-14px, -8px, 0) scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(14px, 6px, 0) scale(1.09);
+  }
+}
+
+/* 副光瓣 11s 缓步椭圆漂移 */
+@keyframes st-aura-orbit-lobe {
+  0% {
+    opacity: 0.76;
+    transform: translate3d(24px, -12px, 0) scale(0.95);
+  }
+  50% {
+    opacity: 0.98;
+    transform: translate3d(-20px, 12px, 0) scale(1.07);
+  }
+  100% {
+    opacity: 0.80;
+    transform: translate3d(14px, 16px, 0) scale(0.98);
+  }
+}
+
+@keyframes st-aura-drift-c {
+  0% {
+    opacity: 0.74;
+    transform: translate3d(-14px, 10px, 0) scale(0.93);
+  }
+  100% {
+    opacity: 0.96;
+    transform: translate3d(16px, -12px, 0) scale(1.07);
+  }
+}
+
+/* ── 主画布顶栏与双栏布局 ─────────────────────────────────────────────── */
+.st-prism-main {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.st-prism-titlebar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045) !important;
+  background: transparent !important;
+}
+
+.st-prism-stage[data-theme="light"] .st-prism-titlebar {
+  border-bottom-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* 新建页彻底隐藏顶栏杂项，还主画布绝对留白 */
+.st-prism-titlebar[data-empty="1"] {
+  height: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border-bottom: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.st-prism-titlebar .ag-v2-titlebar-left,
+.st-prism-titlebar .st-titlebar-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.st-prism-titlebar .st-titlebar-right {
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.st-route-mem-chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-family: var(--ag-v2-font-mono);
+  color: var(--muted-foreground);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.st-main-body {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.st-main-primary {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.st-primary-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 26px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Chat 新建页：Gemini 经典居中双层问候 + 黄金锚点（0px 跳动） ────────── */
+.st-chat-center-stage {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(92px, 19vh, 170px) 0 48px;
+}
+
+.st-chat-greet-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  text-align: center;
+  transition: opacity 180ms var(--st-spring-effect), transform 180ms var(--st-spring-effect);
+}
+
+.st-chat-greet-header[data-exiting="1"] {
+  opacity: 0;
+  transform: translate3d(0, -12px, 0);
+}
+
+/* 第一行：官方彩色 22px 图标 + 柔淡次级问候同行居中 */
+.st-chat-greet-eyebrow-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 26px;
+}
+
+.st-brand-mark-wrap {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--st-fg);
+}
+
+.st-brand-mark-wrap svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.st-chat-greet-eyebrow {
+  font-family: var(--st-font-display);
+  font-size: 15.5px;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  color: var(--st-fg-muted);
+}
+
+.st-stagger-mark {
+  opacity: 0;
+  transform: translate3d(0, 6px, 0) scale(0.96);
+  animation: st-fade-scale 280ms var(--st-spring-effect) 50ms forwards;
+}
+
+.st-brand-swap-anim {
+  animation: st-brand-rotate-swap 240ms var(--st-spring-spatial);
+}
+
+@keyframes st-brand-rotate-swap {
+  from { opacity: 0.25; transform: scale(0.76) rotate(-18deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* 第二行：现代几何无衬线轻字重主问候（覆盖 v2-components 衬线规则，零外网本地可变栈） */
+.ag-v2-stage.st-prism-stage .st-chat-greet-h1[data-testid="home-greeting"],
+.ag-v2-stage.st-prism-stage .st-chat-greet-h1 {
+  margin: 0;
+  font-family: var(--st-font-display);
+  font-optical-sizing: auto;
+  font-size: clamp(28px, 2.9vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.24;
+  color: var(--st-fg);
+  background: linear-gradient(180deg, #f6f8fc 0%, rgba(227, 227, 227, 0.84) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ag-v2-stage.st-prism-stage[data-palette="warm"][data-theme="dark"] .st-chat-greet-h1[data-testid="home-greeting"],
+.ag-v2-stage.st-prism-stage[data-palette="warm"][data-theme="dark"] .st-chat-greet-h1 {
+  background: linear-gradient(180deg, #fbf8f4 0%, rgba(235, 228, 220, 0.84) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ag-v2-stage.st-prism-stage[data-theme="light"] .st-chat-greet-h1[data-testid="home-greeting"],
+.ag-v2-stage.st-prism-stage[data-theme="light"] .st-chat-greet-h1 {
+  background: linear-gradient(180deg, #1f1f1f 0%, #444746 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.st-stagger-greet {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+  animation: st-fade-up 300ms var(--st-spring-effect) 105ms forwards;
+}
+
+.st-stagger-composer {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  animation: st-fade-up 320ms var(--st-spring-effect) 150ms forwards;
+}
+
+@keyframes st-fade-scale {
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes st-fade-up {
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ── Google M3 26px 一体延展输入舱 + 空气级 1px 丝绸微流光 ──────────────── */
+.st-chat-composer-shell {
+  width: min(688px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.st-chat-dock-bottom {
+  width: 100%;
+  padding: 6px 24px 18px;
+  flex-shrink: 0;
+}
+
+/* 一体化大圆角容器：彻底移除硬白外框，由表面明度差与柔和顶漫反光塑形 */
+.st-chat-unified-vessel {
+  position: relative;
+  z-index: 2;
+  border-radius: 26px;
+  background: color-mix(in srgb, var(--st-surface-container) 88%, transparent);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  border: none;
+  box-shadow: inset 0 1px 0 var(--st-top-specular), var(--st-vessel-shadow);
+  transition: box-shadow 300ms var(--st-spring-effect), background-color 260ms var(--st-spring-effect);
+}
+
+.st-chat-composer-shell[data-focused="1"] .st-chat-unified-vessel,
+.st-chat-unified-vessel:focus-within {
+  background: color-mix(in srgb, var(--st-surface-container) 94%, transparent);
+  box-shadow: inset 0 1px 0 var(--st-top-specular), var(--st-vessel-focus-shadow);
+}
+
+/* 空气级 1px 丝绸微流光（仅聚焦时沿 26px 外沿淡入并缓慢单向游走，绝非 RGB 跑马灯） */
+.st-chat-unified-vessel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  background: conic-gradient(
+    from var(--st-halo-angle),
+    transparent 0deg,
+    transparent 215deg,
+    rgba(66, 133, 244, 0.56) 272deg,
+    rgba(0, 180, 216, 0.46) 318deg,
+    rgba(16, 185, 129, 0.24) 342deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  transition: opacity 360ms var(--st-spring-effect);
+  animation: st-halo-drift 7.5s linear infinite;
+  animation-play-state: paused;
+}
+
+/* Spark 丝绸流光：澄澈电光蓝主弧 + 极轻高净度棱镜光泽微反光 */
+.st-chat-composer-shell[data-space-kind="spark"] .st-chat-unified-vessel::after {
+  background: conic-gradient(
+    from var(--st-halo-angle),
+    transparent 0deg,
+    transparent 205deg,
+    rgba(50, 121, 249, 0.64) 262deg,
+    rgba(96, 165, 250, 0.46) 300deg,
+    rgba(16, 185, 129, 0.28) 326deg,
+    rgba(251, 191, 36, 0.22) 342deg,
+    rgba(248, 113, 113, 0.16) 352deg,
+    transparent 360deg
+  );
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-unified-vessel::after {
+  background: conic-gradient(
+    from var(--st-halo-angle),
+    transparent 0deg,
+    transparent 215deg,
+    rgba(11, 87, 208, 0.36) 275deg,
+    rgba(14, 165, 233, 0.30) 322deg,
+    transparent 360deg
+  );
+}
+
+.st-prism-stage[data-theme="light"] .st-chat-composer-shell[data-space-kind="spark"] .st-chat-unified-vessel::after {
+  background: conic-gradient(
+    from var(--st-halo-angle),
+    transparent 0deg,
+    transparent 210deg,
+    rgba(50, 121, 249, 0.40) 270deg,
+    rgba(56, 189, 248, 0.30) 316deg,
+    rgba(16, 185, 129, 0.20) 340deg,
+    transparent 360deg
+  );
+}
+
+.st-chat-composer-shell[data-focused="1"] .st-chat-unified-vessel::after,
+.st-chat-unified-vessel:focus-within::after {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes st-halo-drift {
+  from { --st-halo-angle: 0deg; }
+  to { --st-halo-angle: 360deg; }
+}
+
+.st-chat-card {
+  position: relative;
+  z-index: 2;
+  border-radius: 26px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.st-chat-input {
+  min-height: 58px;
+  max-height: 176px;
+  overflow-y: auto;
+  padding: 16px 20px 8px;
+  outline: none;
+  color: var(--st-fg);
+  font-size: 15px;
+  line-height: 1.56;
+}
+
+/* 豁免 v2-components.css 对 [contenteditable="true"]:focus-visible 的蓝色直角描边，由 1px 丝绸流光与 Focus Bloom 承接反馈 */
+.ag-v2-stage.st-prism-stage .st-chat-input:focus,
+.ag-v2-stage.st-prism-stage .st-chat-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.st-chat-input:empty::before {
+  content: attr(data-placeholder);
+  color: var(--st-fg-dim);
+  pointer-events: none;
+}
+
+.st-chat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 12px 11px;
+  flex-wrap: wrap;
+}
+
+.st-chat-tb-left,
+.st-chat-tb-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.st-mono-icon-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--st-fg-muted);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 160ms var(--st-spring-effect), color 160ms var(--st-spring-effect), transform 160ms var(--st-spring-spatial), border-radius 160ms var(--st-spring-spatial);
+}
+
+.st-mono-icon-btn:hover,
+.st-mono-icon-btn[data-active="1"] {
+  background: var(--st-hover-wash);
+  color: var(--st-fg);
+}
+
+.st-mono-icon-btn:active {
+  transform: scale(0.91);
+  border-radius: 10px;
+}
+
+/* 无边框失重弹簧微胶囊 [ Knowledge | Spark ]（与顶栏同源物理滑块） */
+.st-submode-seg {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(74px, 1fr));
+  padding: 3px;
+  border-radius: 999px;
+  border: none;
+  background: var(--st-pill-track);
+}
+
+.st-submode-slider {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 999px;
+  background: var(--st-pill-thumb);
+  box-shadow: inset 0 1px 0 var(--st-top-specular), 0 1px 4px rgba(0, 0, 0, 0.16);
+  transform: translate3d(0, 0, 0);
+  transition: transform 260ms var(--st-spring-spatial);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.st-prism-stage[data-theme="light"] .st-submode-slider {
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.10);
+}
+
+.st-submode-seg[data-submode="spark"] .st-submode-slider {
+  transform: translate3d(100%, 0, 0);
+}
+
+.st-submode-btn {
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--st-fg-dim);
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  transition: color 160ms var(--st-spring-effect), transform 140ms var(--st-spring-spatial);
+}
+
+.st-submode-btn:hover,
+.st-submode-btn[data-active="1"] {
+  color: var(--st-fg);
+}
+
+.st-submode-btn:active {
+  transform: scale(0.95);
+}
+
+.st-mono-chip {
+  appearance: none;
+  border: none;
+  background: var(--st-pill-track);
+  color: var(--st-fg-muted);
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 450;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 160ms var(--st-spring-effect), color 160ms var(--st-spring-effect), transform 160ms var(--st-spring-spatial), border-radius 160ms var(--st-spring-spatial);
+}
+
+.st-mono-chip.st-model-trigger-ghost {
+  background: transparent;
+}
+
+.st-mono-chip:hover {
+  background: var(--st-hover-wash);
+  color: var(--st-fg);
+}
+
+.st-mono-chip:active {
+  transform: scale(0.96);
+  border-radius: 10px;
+}
+
+/* “打字即点亮”发送钮 + M3 Shape Morphing 按压微形变 */
+.st-sharp-send-btn {
+  appearance: none;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: var(--st-send-ready-bg);
+  color: var(--st-send-ready-fg);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+  transform: scale(1);
+  transition: background-color 200ms var(--st-spring-effect), color 200ms var(--st-spring-effect), transform 220ms var(--st-spring-spatial), border-radius 180ms var(--st-spring-spatial), box-shadow 200ms var(--st-spring-effect);
+}
+
+.st-sharp-send-btn[data-ready="0"],
+.st-sharp-send-btn:disabled {
+  background: var(--st-send-idle-bg);
+  color: var(--st-send-idle-fg);
+  box-shadow: none;
+  opacity: 1;
+  cursor: default;
+  transform: scale(0.96);
+}
+
+.st-sharp-send-btn[data-ready="1"]:hover:not(:disabled) {
+  transform: scale(1.06);
+}
+
+.st-sharp-send-btn[data-ready="1"]:active:not(:disabled) {
+  transform: scale(0.92);
+  border-radius: 12px;
+}
+
+/* M3 无缝一体延展 Spark 底座（同容器内 280ms 空间弹簧向下延展，彻底告别双层硬框拼接，0px 跳动） */
+.st-spark-tray-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  pointer-events: none;
+  transition: grid-template-rows 280ms var(--st-spring-spatial), opacity 220ms var(--st-spring-effect);
+}
+
+.st-chat-composer-shell[data-spark-tray="1"] .st-spark-tray-grid {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.st-spark-tray-overflow {
+  overflow: hidden;
+  border-radius: 0 0 26px 26px;
+}
+
+.st-spark-tray-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px 11px;
+  border-radius: 0 0 26px 26px;
+  background: color-mix(in srgb, var(--st-surface-tray) 92%, transparent);
+  border-top: 1px solid var(--st-hairline);
+  font-size: 12.5px;
+  color: var(--st-fg-muted);
+  transform: translate3d(0, -10px, 0);
+  opacity: 0;
+  transition: transform 280ms var(--st-spring-spatial), opacity 210ms var(--st-spring-effect);
+}
+
+.st-chat-composer-shell[data-spark-tray="1"] .st-spark-tray-bar {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+.st-spark-tray-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.st-tray-trigger {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--st-fg-muted);
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 450;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 160ms var(--st-spring-effect), color 160ms var(--st-spring-effect), transform 150ms var(--st-spring-spatial), border-radius 150ms var(--st-spring-spatial);
+}
+
+.st-tray-trigger:hover {
+  background: var(--st-hover-wash);
+  color: var(--st-fg);
+}
+
+.st-tray-trigger:active {
+  transform: scale(0.95);
+  border-radius: 10px;
+}
+
+.st-tray-info-btn {
+  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+}
+
+.st-know-folder-pill {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  color: var(--st-fg-muted);
+  background: var(--st-surface-container);
+  border: none;
+}
+
+/* ── Code 首页孪生柔化衔接（保留字符海/热力图/双宠，同步 M3 Tonal 大圆角表面） ── */
+.st-code-home-stack {
+  width: min(820px, 100%);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 6px 0 18px;
+}
+
+.st-prism-stage .ag-v2-bento-chassis {
+  border-radius: 22px !important;
+  background: color-mix(in srgb, var(--st-surface-container) 86%, transparent) !important;
+  border: 1px solid var(--st-hairline) !important;
+  box-shadow: inset 0 1px 0 var(--st-top-specular), var(--st-vessel-shadow) !important;
+}
+
+.st-prism-stage .st-composer-host-wrap .ag-prism-rim {
+  border-radius: 24px !important;
+  background: color-mix(in srgb, var(--st-surface-container) 90%, transparent) !important;
+  border-color: var(--st-hairline) !important;
+  box-shadow: inset 0 1px 0 var(--st-top-specular), var(--st-vessel-shadow) !important;
+}
+
+.st-composer-host-wrap {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.st-composer-host-wrap .ag-v2-composer-dock {
+  padding-top: 26px;
+}
+
+.st-composer-host-wrap .ag-v2-composer-input {
+  min-height: 48px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.st-composer-host-wrap .ag-v2-composer-input:empty::before {
+  content: attr(data-placeholder);
+  color: var(--st-fg-dim);
+  pointer-events: none;
+}
+
+/* ── Google Neural Expressive 居中阅读列（~740px）+ 显示思路 + Canvas 悬浮分屏 ── */
+.st-reading-col {
+  width: min(740px, 100%);
+  margin: 0 auto;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.st-msg-enter {
+  animation: st-fade-up 260ms var(--st-spring-effect);
+}
+
+/* 用户消息：Google M3 大圆角温润胶囊（带 6px 右上微折角，无硬边框） */
+.st-msg-user {
+  align-self: flex-end;
+  max-width: 78%;
+  padding: 12px 18px;
+  border-radius: 22px 6px 22px 22px;
+  background: var(--st-surface-high);
+  border: none;
+  color: var(--st-fg);
+  font-size: 14.5px;
+  line-height: 1.62;
+  box-shadow: inset 0 1px 0 var(--st-top-specular);
+}
+
+/* AI 回复行：左侧 22px 官方彩色星标 + 右侧零边框杂志级正文 */
+.st-msg-assistant-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+}
+
+.st-msg-assistant-avatar {
+  width: 24px;
+  height: 24px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.st-msg-assistant-avatar.is-thinking {
+  animation: st-brand-thinking-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes st-brand-thinking-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.92; }
+  50% { transform: scale(1.12) rotate(12deg); opacity: 1; }
+}
+
+.st-msg-assistant {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--st-fg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.st-msg-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.st-msg-p {
+  margin: 0;
+}
+
+/* Google Gemini「显示思路 ⌄」极简无框折叠条 + 左缘柔光细纵线 */
+.st-thought-disclosure {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.st-thought-toggle {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--st-fg-muted);
+  height: 28px;
+  padding: 0 10px 0 4px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 160ms var(--st-spring-effect), color 160ms var(--st-spring-effect);
+}
+
+.st-thought-toggle:hover {
+  background: var(--st-hover-wash);
+  color: var(--st-fg);
+}
+
+.st-thought-chev {
+  display: inline-flex;
+  transition: transform 220ms var(--st-spring-spatial);
+  transform: rotate(-90deg);
+}
+
+.st-thought-disclosure[data-open="1"] .st-thought-chev {
+  transform: rotate(0deg);
+}
+
+.st-thought-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 240ms var(--st-spring-spatial), opacity 200ms var(--st-spring-effect);
+}
+
+.st-thought-disclosure[data-open="1"] .st-thought-grid {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.st-thought-inner {
+  overflow: hidden;
+}
+
+.st-thought-box {
+  padding: 4px 4px 6px 14px;
+  margin-left: 6px;
+  border-left: 2px solid color-mix(in srgb, var(--st-active-anchor) 38%, transparent);
+  background: transparent;
+  font-size: 13px;
+  color: var(--st-fg-dim);
+  line-height: 1.66;
+}
+
+.st-rebind-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.st-msg-card {
+  padding: 15px 18px;
+  border-radius: 18px;
+  background: var(--st-surface-container);
+  border: 1px solid var(--st-hairline);
+  box-shadow: inset 0 1px 0 var(--st-top-specular);
+}
+
+.st-code-block {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--st-surface-tray);
+  border: 1px solid var(--st-hairline);
+  font-family: var(--ag-v2-font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: var(--st-fg-muted);
+}
+
+/* Google Canvas 独立圆角悬浮 Artifacts 分屏（四周空气留白 + M3 空间弹簧滑入） */
+.st-artifacts-pane {
+  width: 0;
+  min-width: 0;
+  opacity: 0;
+  padding: 0;
+  border-left: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: none;
+  transition: width 280ms var(--st-spring-spatial), opacity 220ms var(--st-spring-effect), padding 280ms var(--st-spring-spatial);
+}
+
+.st-artifacts-pane[data-open="1"] {
+  width: clamp(270px, 36%, 376px);
+  opacity: 1;
+  padding: 10px 10px 10px 4px;
+  pointer-events: auto;
+}
+
+.st-canvas-surface {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background: var(--st-surface-container);
+  border: 1px solid var(--st-hairline);
+  box-shadow: inset 0 1px 0 var(--st-top-specular), var(--st-canvas-shadow);
+  overflow: hidden;
+}
+
+.st-art-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--st-hairline);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--st-fg);
+  white-space: nowrap;
+}
+
+.st-canvas-close-btn {
+  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+}
+
+.st-art-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.62;
+  color: var(--st-fg-muted);
+}
+
+.st-canvas-doc-card {
+  background: var(--st-surface-tray);
+}
+
+.st-canvas-doc-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--st-fg);
+  margin-bottom: 6px;
+}
+
+.st-canvas-doc-meta {
+  font-size: 12px;
+  color: var(--st-fg-dim);
+}
+
+/* 窄屏容器自适应：Artifacts 展开时不遮挡聊天工具条 */
+@container (max-width: 480px) {
+  .st-chat-dock-bottom {
+    padding: 6px 12px 12px;
+  }
+  .st-primary-scroll {
+    padding: 16px 14px 12px;
+  }
+}
+
+/* 512K 实体水试管浮层（Code 专属） */
+.st-vial-pop {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 12px);
+  width: 332px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--popover-bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--elevation-2);
+  backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 40;
+}
+
+.st-vial-canvas {
+  width: 82px;
+  height: 132px;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ── 右侧开发者状态与权限审计抽屉 ─────────────────────────────────────── */
+.st-audit-drawer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: #0b0b0e;
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
+  color: #e6e6ee;
+  overflow: hidden;
+}
+
+.st-audit-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.st-audit-title {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.st-audit-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  color: #8f8f9c;
+}
+
+.st-audit-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 11.5px;
+}
+
+.st-audit-card {
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: #141419;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.st-audit-ctitle {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #8f8f9c;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.st-audit-kv {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+}
+
+.st-audit-log {
+  margin: 0;
+  padding: 8px;
+  border-radius: 6px;
+  background: #09090b;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: #bdbdc8;
+  max-height: 164px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── M3 温润大圆角锚点浮层 / 右键菜单 / 气泡 / WSL Modal（Spatial Spring 弹入） ── */
+.st-popover {
+  position: fixed;
+  z-index: 9000;
+  min-width: 220px;
+  max-width: 296px;
+  padding: 6px;
+  border-radius: 16px;
+  background: var(--st-surface-popover, var(--popover-bg));
+  border: 1px solid var(--st-hairline, var(--border-subtle));
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.36), inset 0 1px 0 var(--st-top-specular, rgba(255, 255, 255, 0.08));
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transform-origin: top left;
+  animation: st-pop-in 180ms var(--st-spring-spatial, cubic-bezier(0.34, 1.24, 0.64, 1));
+}
+
+.st-prism-stage[data-theme="light"] .st-popover {
+  box-shadow: 0 10px 32px rgba(15, 23, 42, 0.12), 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+@keyframes st-pop-in {
+  from { opacity: 0; transform: scale(0.94) translate3d(0, -5px, 0); }
+  to { opacity: 1; transform: scale(1) translate3d(0, 0, 0); }
+}
+
+.st-menu-item {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--st-fg, var(--foreground));
+  min-height: 32px;
+  padding: 5px 11px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background-color 140ms ease, transform 140ms ease;
+}
+
+.st-menu-item:hover {
+  background: var(--st-hover-wash, var(--hover-wash));
+}
+
+.st-menu-item:active {
+  transform: scale(0.98);
+}
+
+.st-menu-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.st-menu-sep {
+  height: 1px;
+  margin: 4px 8px;
+  background: var(--st-hairline, var(--border-subtle));
+}
+
+.st-menu-note {
+  padding: 6px 10px;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--st-fg-muted, var(--muted-foreground));
+}
+
+/* 纯净 Gemini 模型与思考强度 Popover（零滑块 / 零 Orchestrator / 零 Claude） */
+.st-model-popover {
+  min-width: 256px;
+  max-width: 288px;
+  padding: 8px;
+}
+
+.st-model-sec-label {
+  padding: 4px 10px 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.035em;
+  color: var(--st-fg-dim, var(--muted-foreground));
+}
+
+.st-model-opt {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--st-fg, var(--foreground));
+  padding: 8px 10px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 140ms ease, transform 140ms ease;
+}
+
+.st-model-opt:hover {
+  background: var(--st-hover-wash, var(--hover-wash));
+}
+
+.st-model-opt[data-selected="1"] {
+  background: var(--st-active-pill, var(--hover-wash));
+}
+
+.st-model-opt[data-selected="1"] .st-model-opt-name,
+.st-model-opt[data-selected="1"] .st-model-opt-check {
+  color: var(--st-active-text, var(--foreground));
+}
+
+.st-model-opt:active {
+  transform: scale(0.985);
+}
+
+.st-model-opt-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.st-model-opt-name {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--st-fg, var(--foreground));
+}
+
+.st-model-opt-desc {
+  font-size: 11px;
+  color: var(--st-fg-dim, var(--muted-foreground));
+}
+
+.st-model-opt-check {
+  font-size: 11.5px;
+  color: var(--st-active-anchor, var(--foreground));
+  flex-shrink: 0;
+}
+
+.st-effort-pills {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  padding: 4px 6px 4px;
+}
+
+.st-effort-pill {
+  appearance: none;
+  border: none;
+  background: var(--st-pill-track, rgba(230, 234, 240, 0.05));
+  color: var(--st-fg-dim, var(--muted-foreground));
+  height: 28px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.st-effort-pill:hover {
+  color: var(--st-fg, var(--foreground));
+}
+
+.st-effort-pill:active {
+  transform: scale(0.94);
+}
+
+.st-effort-pill[data-active="1"] {
+  background: var(--st-active-pill, rgba(230, 234, 240, 0.14));
+  color: var(--st-active-text, var(--foreground));
+  box-shadow: inset 0 1px 0 var(--st-top-specular, rgba(255, 255, 255, 0.09));
+}
+
+.st-badge-preview {
+  position: fixed;
+  z-index: 9100;
+  width: 268px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--popover-bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--elevation-2);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--foreground);
+  pointer-events: none;
+  animation: st-pop-in 140ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.st-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  background: rgba(5, 6, 10, 0.56);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.st-modal-box {
+  width: min(440px, 100%);
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--popover-bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--elevation-2);
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: st-pop-in 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.st-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.st-modal-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--secondary-foreground);
+}
+
+.st-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.st-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 9800;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--popover-bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--elevation-2);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+/* ── 无障碍与 motionLevel="off" 全局即时零延迟护栏 ─────────────────────── */
+.st-prism-stage[data-motion="off"] *,
+.st-prism-stage[data-motion="off"] *::before,
+.st-prism-stage[data-motion="off"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.st-prism-stage[data-motion="off"] .st-chat-aura-orb,
+.st-prism-stage[data-motion="off"] .st-chat-unified-vessel::after,
+.st-prism-stage[data-motion="off"] .st-msg-assistant-avatar.is-thinking {
+  animation: none !important;
+}
+
+.st-prism-stage[data-motion="subtle"] .st-chat-aura-orb {
+  opacity: 0.52;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-prism-stage *,
+  .st-prism-stage *::before,
+  .st-prism-stage *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

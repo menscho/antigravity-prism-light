@@ -1,0 +1,8 @@
+{
+  "patterns": [
+    {
+      "regex": "^What's up next, (.+)\\?$",
+      "replacement": "Sırada ne var, $1?"
+    }
+  ]
+}

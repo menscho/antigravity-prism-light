@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN" class="overlay-scrollbars">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antigravity — 1:1 Host Mirror &amp; Live Prism Preview</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23101010'/%3E%3Cpath fill='%23669DF6' d='M12 2.2c.23 0 .43.16.49.38c.19.72.44 1.43.73 2.11c1.13 2.62 3.1 4.6 5.73 5.73c.68.29 1.39.54 2.11.73c.22.06.38.26.38.49s-.16.43-.38.49a15 15 0 0 0-2.11.73c-2.63 1.13-4.6 3.11-5.73 5.73c-.29.68-.54 1.39-.73 2.11a.5.5 0 0 1-.49.38a.5.5 0 0 1-.49-.38a15 15 0 0 0-.73-2.11c-1.13-2.62-3.1-4.6-5.73-5.73a15 15 0 0 0-2.11-.73a.5.5 0 0 1-.38-.49c0-.23.16-.43.38-.49c.72-.19 1.43-.44 2.11-.73c2.63-1.13 4.6-3.11 5.73-5.73c.29-.68.54-1.39.73-2.11c.06-.22.26-.38.49-.38Z'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    id="agy-new-themes-fonts"
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400..700;1,400..700&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Google+Sans+Flex:ROND,opsz,slnt,wdth,wght@0..100,6..144,-10..0,92..100,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    media="print"
+    onload="this.media='all'"
+  />
+  <!-- Authentic Antigravity compiled_tailwind.css + jetbox.css (local .gitignore mirror) -->
+  <link rel="stylesheet" href="/api/host-mirror/native.css" />
+  <link rel="stylesheet" href="/replica.css" />
+</head>
+<body class="theme-standalone dark dark-theme theme-dark" data-agy-theme="dark" data-agy-font="google-sans">
+  <div class="relative w-screen h-[100dvh] overflow-hidden">
+    <div class="h-full w-full dark" id="ag-replica-root">
+      <div class="flex flex-col h-full min-h-0 bg-shell text-foreground">
+        <!-- 1. Authentic 35px Antigravity Titlebar ([data-testid="title-menu-bar"]) -->
+        <div class="shrink-0 flex items-center bg-sidebar w-full select-none border-b border-border/60" style="height:35px;">
+          <div data-testid="title-menu-bar" class="flex items-center gap-1 px-2 h-full bg-sidebar w-full">
+            <div class="flex items-center gap-0.5">
+              <button type="button" class="agy-button agy-button-sm inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer px-2 py-1 rounded-md text-xs text-secondary-foreground hover:text-foreground hover:bg-secondary" data-testid="title-menu-bar-item" data-sim-action="go-home">Antigravity</button>
+              <button type="button" class="agy-button agy-button-sm inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer px-2 py-1 rounded-md text-xs text-secondary-foreground hover:text-foreground hover:bg-secondary" data-testid="title-menu-bar-item" data-sim-action="open-fastpick">Workspace</button>
+              <button type="button" class="agy-button agy-button-sm inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer px-2 py-1 rounded-md text-xs text-secondary-foreground hover:text-foreground hover:bg-secondary" data-testid="title-menu-bar-item" data-sim-action="toggle-sidebar">View</button>
+              <button type="button" class="agy-button agy-button-sm inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer px-2 py-1 rounded-md text-xs text-secondary-foreground hover:text-foreground hover:bg-secondary" data-testid="title-menu-bar-item" data-sim-action="open-settings">Window</button>
+            </div>
+
+            <!-- Minimal Centered Live Comparison Pill -->
+            <div class="mx-auto flex items-center" data-ag-no-i18n="">
+              <div class="wb-sim-pill" role="group" aria-label="原生本体与实时 Prism 注入对比">
+                <button type="button" class="wb-sim-btn is-native" id="sim-mode-native" data-sim-action="set-prism" data-val="0" data-active="true">原生本体</button>
+                <button type="button" class="wb-sim-btn" id="sim-mode-prism" data-sim-action="set-prism" data-val="1" data-active="false">Prism 实时注入</button>
+                <button type="button" class="wb-sim-btn" id="sim-toggle-theme" data-sim-action="toggle-host-theme" title="切换宿主明/暗模式">Dark</button>
+                <button type="button" class="wb-sim-btn" id="sim-toggle-drawer" data-sim-action="toggle-drawer" data-active="false">控台</button>
+              </div>
+            </div>
+
+            <!-- Windows Caption Controls -->
+            <div class="flex items-center shrink-0 -mr-2" aria-hidden="true">
+              <button type="button" class="ag-win-btn" tabindex="-1">&#x2013;</button>
+              <button type="button" class="ag-win-btn" tabindex="-1">&#x25A1;</button>
+              <button type="button" class="ag-win-btn is-close" tabindex="-1">&#x2715;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Authentic Main Split Shell ([data-testid="sidebar-split"]) -->
+        <div class="flex-1 min-h-0 w-full relative overflow-hidden">
+          <div data-testid="sidebar-split" class="agy-shell relative flex w-full h-full outline-none">
+            <!-- Child 1 (div:first-child): Authentic 256px Left Sidebar -->
+            <div class="flex ag-replica-sb-wrap bg-sidebar h-full" id="ag-sidebar-pane" data-collapsed="false">
+              <div class="flex flex-col w-full h-full min-h-0 px-2 pb-2 bg-sidebar select-none">
+                <!-- Sidebar Top 40px Bar: Exact Real Antigravity 5-icon left-aligned row (Logo + Toggle + Back + Forward + Search) -->
+                <div class="flex items-center gap-1 h-10 shrink-0 px-0.5">
+                  <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center justify-center h-7 w-7 rounded-lg bg-transparent text-foreground hover:bg-secondary cursor-pointer border-none" data-testid="app-icon-new-conversation-button" data-sim-action="go-home" title="新建对话首页">
+                    <span data-host-icon="appLogo"></span>
+                  </button>
+                  <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer justify-center h-7 w-7 shrink-0 rounded-lg group bg-transparent text-secondary-foreground hover:text-foreground hover:bg-secondary border-none" data-testid="sidebar-toggle" data-sim-action="toggle-sidebar" title="折叠侧边栏">
+                    <span data-host-icon="sidebarToggle"></span>
+                  </button>
+                  <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center justify-center h-7 w-7 rounded-lg bg-transparent text-secondary-foreground hover:text-foreground hover:bg-secondary cursor-pointer border-none" data-sim-action="go-conv" title="后退">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                  </button>
+                  <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center justify-center h-7 w-7 rounded-lg bg-transparent text-muted-foreground hover:text-foreground hover:bg-secondary cursor-pointer border-none" data-sim-action="go-home" title="前进">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+                  <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer justify-center h-7 w-7 shrink-0 rounded-lg group bg-transparent text-secondary-foreground hover:text-foreground hover:bg-secondary border-none" data-testid="sidebar-search-button" data-sim-action="open-fastpick" title="Search (Ctrl+K)">
+                    <span data-host-icon="search"></span>
+                  </button>
+                </div>
+
+                <!-- Sidebar Primary Navigation Items (Authentic Top 3 preserved + Extra Tools folded into More by Prism) -->
+                <div data-testid="sidebar-navigation-items" class="flex flex-col gap-0.5 shrink-0">
+                  <a href="javascript:void(0)" class="agy-button agy-button-custom inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer flex-grow w-full justify-start font-normal min-w-0 gap-2 px-2 rounded-lg py-1.5 bg-transparent text-foreground hover:bg-sidebar-muted text-sm no-underline" data-testid="new-conversation-button" data-sim-action="go-home">
+                    <span data-host-icon="newConv" class="shrink-0 inline-flex text-secondary-foreground"></span>
+                    <span class="truncate flex-1">New Conversation</span>
+                  </a>
+                  <button type="button" class="agy-button agy-button-custom inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer flex-grow w-full justify-start font-normal min-w-0 gap-2 px-2 rounded-lg py-1.5 bg-transparent text-secondary-foreground hover:bg-sidebar-muted hover:text-foreground border-none text-sm" data-testid="automations-button" data-sim-action="open-settings-plugins">
+                    <span data-host-icon="automations" class="shrink-0 inline-flex"></span>
+                    <span class="truncate flex-1 text-left">Automations</span>
+                  </button>
+                  <button type="button" class="agy-button agy-button-custom inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer flex-grow w-full justify-start font-normal min-w-0 gap-2 px-2 rounded-lg py-1.5 bg-transparent text-secondary-foreground hover:bg-sidebar-muted hover:text-foreground border-none text-sm" data-sim-action="open-settings-plugins">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+                    <span class="truncate flex-1 text-left">Customizations</span>
+                  </button>
+                  <!-- Extra built-in / extension tools beyond host top 3 -> auto-folded into "More" by Prism -->
+                  <button type="button" class="agy-button agy-button-custom inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer flex-grow w-full justify-start font-normal min-w-0 gap-2 px-2 rounded-lg py-1.5 bg-transparent text-secondary-foreground hover:bg-sidebar-muted hover:text-foreground border-none text-sm" data-sim-action="go-history">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+                    <span class="truncate flex-1 text-left">History</span>
+                  </button>
+                  <button type="button" class="agy-button agy-button-custom inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer flex-grow w-full justify-start font-normal min-w-0 gap-2 px-2 rounded-lg py-1.5 bg-transparent text-secondary-foreground hover:bg-sidebar-muted hover:text-foreground border-none text-sm" data-sim-action="open-fastpick">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    <span class="truncate flex-1 text-left">Command Palette</span>
+                  </button>
+                </div>
+
+                <!-- Sidebar Scrollable Conversation Tree -->
+                <div class="flex-1 min-h-0 overflow-y-auto scrollbar-none flex flex-col gap-1.5 pt-3">
+                  <div data-testid="pinned-section-header" class="flex items-center gap-1 px-2 text-xs font-medium text-muted-foreground select-none cursor-pointer hover:text-foreground">
+                    <span>Pinned Conversations</span>
+                    <span style="opacity:.6;">›</span>
+                  </div>
+                  <div data-testid="conversation-list-sidebar" id="ag-pinned-list" class="flex flex-col gap-0.5"></div>
+
+                  <div class="flex items-center justify-between px-2 pt-2 text-xs font-medium text-muted-foreground select-none">
+                    <span>Projects</span>
+                    <div class="flex items-center gap-1">
+                      <button type="button" class="inline-flex items-center justify-center w-5 h-5 rounded bg-transparent border-none text-muted-foreground hover:text-foreground cursor-pointer" data-sim-action="open-fastpick" title="筛选项目">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+                      </button>
+                      <button type="button" class="inline-flex items-center justify-center w-5 h-5 rounded bg-transparent border-none text-muted-foreground hover:text-foreground cursor-pointer" data-testid="sidebar-add-project-button" data-sim-action="go-home" title="新增工作区">
+                        <span data-host-icon="addProject"></span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div data-testid="project-header" class="flex items-center justify-between px-2 pt-1 text-xs font-medium text-foreground select-none">
+                    <span class="inline-flex items-center gap-1.5 min-w-0 truncate">
+                      <span data-testid="project-header-icon" data-host-icon="projectFolder" class="shrink-0 inline-flex text-secondary-foreground"></span>
+                      <span class="truncate">obsidian-prism</span>
+                    </span>
+                    <span class="text-muted-foreground text-xs" style="opacity:.65;">+</span>
+                  </div>
+                  <div data-testid="conversation-list-sidebar" id="ag-project-list" class="flex flex-col gap-0.5"></div>
+
+                  <!-- Authentic folded sibling workspaces matching real Antigravity sidebar density -->
+                  <div class="flex flex-col gap-0.5 pt-2">
+                    <div class="flex items-center gap-2 px-2 py-1 text-xs text-secondary-foreground hover:text-foreground cursor-pointer rounded-lg hover:bg-sidebar-muted">
+                      <span data-host-icon="projectFolder" class="shrink-0 inline-flex text-muted-foreground"></span>
+                      <span class="truncate">antigravity-demos</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-2 py-1 text-xs text-secondary-foreground hover:text-foreground cursor-pointer rounded-lg hover:bg-sidebar-muted">
+                      <span data-host-icon="projectFolder" class="shrink-0 inline-flex text-muted-foreground"></span>
+                      <span class="truncate">design-tokens-lab</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sidebar Bottom Settings Button -->
+                <div class="shrink-0 pt-2 border-t border-border/50">
+                  <button type="button" class="agy-button agy-button-custom inline-flex items-center font-medium transition-colors select-none outline-none cursor-pointer flex-grow w-full justify-start font-normal min-w-0 gap-1.5 px-2 rounded-lg py-1.5 bg-transparent text-secondary-foreground hover:bg-sidebar-muted hover:text-foreground border-none text-sm" data-testid="settings-button" data-sim-action="open-settings">
+                    <span data-host-icon="settings" class="shrink-0 inline-flex"></span>
+                    <span class="truncate">Settings</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Child 2 (div:nth-child(2)): Authentic 1px Sidebar Sash -->
+            <div data-testid="sidebar-sash" class="flex-shrink-0 relative z-30 bg-transparent w-[1px] h-full"></div>
+
+            <!-- Child 3 (div:nth-child(3)): Right Main Workspace -->
+            <div class="flex-1 min-w-0 h-full overflow-hidden">
+              <div data-testid="aux-pane-split" class="relative flex w-full h-full outline-none">
+                <!-- Aux Child 1 (div:first-child): Main Column -->
+                <div class="flex flex-1 flex-col min-w-0 min-h-0 h-full bg-background overflow-hidden">
+                  <!-- Authentic 40px Pane Header + Right Toolbar -->
+                  <div class="h-10 shrink-0 flex items-center justify-between px-3 bg-background select-none z-10">
+                    <div class="flex items-center gap-1.5 min-w-0 text-sm">
+                      <button type="button" id="ag-header-expand-sb" class="agy-button agy-button-icon-lg inline-flex items-center justify-center h-7 w-7 rounded-lg bg-transparent text-secondary-foreground hover:text-foreground hover:bg-secondary border-none cursor-pointer" data-sim-action="toggle-sidebar" title="展开侧边栏" style="display:none;">
+                        <span data-host-icon="sidebarToggle"></span>
+                      </button>
+                      <span data-testid="breadcrumb-segment" class="text-muted-foreground truncate">obsidian-prism</span>
+                      <span class="text-muted-foreground/50">/</span>
+                      <span data-testid="breadcrumb-segment" id="ag-crumb-title" class="text-foreground font-medium truncate">ARCH-001 黑曜棱镜 M3 重构与双宠生态</span>
+                    </div>
+
+                    <div class="agy-layout-vars flex items-center justify-end shrink-0" data-testid="pane-titlebar-toolbar">
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center justify-center h-7 w-7 rounded-lg bg-transparent text-secondary-foreground hover:text-foreground hover:bg-secondary border-none cursor-pointer" data-testid="toggle-aux-sidebar" data-sim-action="toggle-terminal" title="开关底部终端">
+                          <span data-host-icon="ovTerminal"></span>
+                        </button>
+                        <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center justify-center h-7 w-7 rounded-lg bg-transparent text-secondary-foreground hover:text-foreground hover:bg-secondary border-none cursor-pointer" data-testid="titlebar-more-actions" data-sim-action="open-fastpick" title="命令面板 (Ctrl+K)">
+                          <span data-host-icon="moreActions"></span>
+                        </button>
+                        <button type="button" class="agy-button agy-button-icon-lg inline-flex items-center justify-center h-7 w-7 rounded-lg bg-transparent text-secondary-foreground hover:text-foreground hover:bg-secondary border-none cursor-pointer" data-testid="toggle-overview-panel" data-sim-action="toggle-overview" title="开关右上角 Overview 悬浮卡">
+                          <span data-host-icon="toggleOverview"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Authentic Overview Panel Host (Full-width Conversation + Floating Top-Right 320px Overview Card!) -->
+                  <div data-testid="overview-panel-host" class="relative flex flex-1 h-full w-full min-h-0 min-w-0 outline-none overflow-hidden">
+                    <!-- Dynamic Stage Mount (Conversation View OR New Conversation .agy-home) -->
+                    <div id="ag-stage-mount" class="flex-1 min-w-0 min-h-0 h-full w-full flex flex-col relative overflow-hidden"></div>
+
+                    <!-- Authentic Floating Top-Right Overview Panel ([data-testid="overview-panel-host-sibling"]) -->
+                    <div id="ag-overview-shell" data-testid="overview-panel-host-sibling" class="animate-overview-panel origin-top-right absolute flex flex-col rounded-xl border border-border bg-card overflow-hidden z-30 shadow-md" style="top:10px;right:14px;width:288px;max-width:calc(100% - 28px);max-height:calc(100% - 20px);">
+                      <div data-testid="overview-panel" class="flex flex-auto w-full min-h-0 flex-col">
+                        <div class="flex shrink-0 flex-col px-1 pt-1 pb-px">
+                          <div class="flex w-full items-center gap-1.5 rounded-lg px-2 py-1.5">
+                            <span class="agy-hover-label text-sm opacity-50 font-medium select-none">Overview</span>
+                            <span class="ml-auto flex items-center -my-1">
+                              <button type="button" data-testid="overview-panel-customize-trigger" data-sim-action="open-settings-plugins" class="group flex items-center justify-center border-none bg-transparent text-secondary-foreground hover:text-foreground h-6 w-6 rounded-md hover:bg-secondary cursor-pointer" title="Customize Overview">
+                                <span data-host-icon="ovCustomize"></span>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div tabindex="-1" class="flex flex-col overflow-y-auto outline-none scrollbar-none w-full" style="scrollbar-width: none;">
+                          <div class="flex flex-col gap-px px-1 pb-1">
+                            <button type="button" data-testid="overview-panel-row-review" data-sim-action="scroll-diff" class="flex w-full items-center gap-2 rounded-lg border-none text-left outline-none py-1.5 px-2 select-none bg-transparent text-secondary-foreground hover:bg-secondary hover:text-foreground cursor-pointer text-sm">
+                              <span data-host-icon="ovReview" class="shrink-0 inline-flex opacity-80"></span>
+                              <span class="agy-hover-label min-w-0 truncate flex-1">Review</span>
+                            </button>
+                            <button type="button" data-testid="overview-panel-row-files" data-sim-action="open-fastpick" class="flex w-full items-center gap-2 rounded-lg border-none text-left outline-none py-1.5 px-2 select-none bg-transparent text-secondary-foreground hover:bg-secondary hover:text-foreground cursor-pointer text-sm">
+                              <span data-host-icon="ovFiles" class="shrink-0 inline-flex opacity-80"></span>
+                              <span class="agy-hover-label min-w-0 truncate flex-1">Files</span>
+                            </button>
+                            <button type="button" data-testid="overview-panel-row-terminal" data-sim-action="toggle-terminal" class="flex w-full items-center gap-2 rounded-lg border-none text-left outline-none py-1.5 px-2 select-none bg-transparent text-secondary-foreground hover:bg-secondary hover:text-foreground cursor-pointer text-sm">
+                              <span data-host-icon="ovTerminal" class="shrink-0 inline-flex opacity-80"></span>
+                              <span class="agy-hover-label min-w-0 truncate flex-1">Terminal</span>
+                            </button>
+                            <button type="button" data-testid="overview-panel-row-plugins" data-sim-action="open-settings-plugins" class="flex w-full items-center gap-2 rounded-lg border-none text-left outline-none py-1.5 px-2 select-none bg-transparent text-secondary-foreground hover:bg-secondary hover:text-foreground cursor-pointer text-sm">
+                              <span data-host-icon="ovPlugins" class="shrink-0 inline-flex opacity-80"></span>
+                              <span class="agy-hover-label min-w-0 truncate flex-1">Plugins</span>
+                              <span class="text-xs opacity-50">›</span>
+                            </button>
+                          </div>
+
+                          <div class="px-2 py-1.5 border-t border-border/50 flex flex-col gap-1">
+                            <div class="flex items-center gap-1.5 px-1 py-0.5 text-xs">
+                              <span class="opacity-55 font-medium select-none">Subagents</span>
+                              <span class="text-[10px] font-medium opacity-60 bg-border rounded-full px-1.5 tabular-nums">6</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-1 py-0.5 text-xs">
+                              <span class="opacity-55 font-medium select-none">Background Tasks</span>
+                              <span class="text-[10px] font-medium opacity-60 bg-border rounded-full px-1.5 tabular-nums">1</span>
+                            </div>
+                            <button type="button" data-testid="background-task-row" data-sim-action="toggle-terminal" class="flex w-full items-center gap-1.5 rounded-lg border-none text-left px-1.5 py-1 text-xs text-secondary-foreground bg-transparent hover:bg-secondary hover:text-foreground cursor-pointer">
+                              <span class="opacity-65" style="font-family:'Google Sans Code',monospace;">&gt;_</span>
+                              <span class="truncate flex-1">Workbench server (port 4321)</span>
+                            </button>
+                            <button type="button" data-sim-action="toggle-terminal" class="border-none bg-transparent text-left px-1.5 py-0.5 text-xs text-muted-foreground hover:text-foreground cursor-pointer">See all</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Authentic Bottom Terminal Panel -->
+                  <section data-testid="bottom-terminal-panel" id="ag-bottom-terminal" class="h-[170px] shrink-0 border-t border-border bg-muted flex flex-col z-10" hidden>
+                    <div class="h-8 px-3 flex items-center justify-between border-b border-border text-xs text-secondary-foreground">
+                      <span class="font-medium">TERMINAL · powershell · feat/arch-001</span>
+                      <button type="button" class="border-none bg-transparent text-muted-foreground hover:text-foreground cursor-pointer text-xs" data-sim-action="toggle-terminal">Close</button>
+                    </div>
+                    <div class="flex-1 p-3 overflow-y-auto text-xs leading-relaxed text-secondary-foreground" style="font-family:'Google Sans Code','JetBrains Mono',monospace;">
+                      <div>PS feat/arch-001&gt; npm test</div>
+                      <div class="text-success">ℹ tests 282 · pass 281 · fail 0 · skipped 1 (17.05s)</div>
+                      <div class="text-muted-foreground">› style.css pure ASCII check: 0 bad chars · sidebarStudio default: off</div>
+                    </div>
+                  </section>
+                </div>
+
+                <!-- Aux Child 2 (1px sash) & Child 3 (aux slot), hidden when closed -->
+                <div class="flex-shrink-0 w-[1px] h-full bg-transparent" style="display:none;"></div>
+                <div style="display:none;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fastpick Modal (Ctrl+K) -->
+    <div class="ag-modal-scrim" id="ag-fastpick-scrim" hidden>
+      <div class="agy-fastpick surface-glass w-[560px] max-w-[calc(100vw-32px)] rounded-xl border border-border bg-card shadow-2xl p-2.5 flex flex-col gap-2" role="dialog" aria-label="Quick Open / Fastpick">
+        <input type="text" id="ag-fastpick-input" class="agy-field w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none" placeholder="Search files, commands, or /slash theaters..." autocomplete="off" />
+        <div role="listbox" id="ag-fastpick-list" class="flex flex-col gap-0.5 max-h-[340px] overflow-y-auto"></div>
+      </div>
+    </div>
+
+    <!-- Native Settings Dialog ([role="dialog"] > div.p-6 > h2="外观" + div.space-y-2 -> auto-mounts real settings-panel.js!) -->
+    <div class="ag-settings-scrim" id="ag-settings-scrim" hidden>
+      <div class="w-[860px] max-w-[calc(100vw-48px)] h-[660px] max-h-[calc(100vh-64px)] rounded-2xl border border-border bg-background shadow-2xl flex overflow-hidden" role="dialog" aria-modal="true" aria-label="Settings">
+        <nav class="w-[200px] shrink-0 bg-sidebar border-r border-border p-3 flex flex-col gap-1">
+          <div class="text-sm font-semibold px-2 pb-2 text-foreground">Settings</div>
+          <button type="button" class="agy-button inline-flex items-center w-full px-2.5 py-1.5 rounded-lg text-sm bg-transparent border-none text-secondary-foreground hover:bg-sidebar-secondary hover:text-foreground cursor-pointer" data-sim-settings-tab="appearance" data-active="true">外观 · Appearance</button>
+          <button type="button" class="agy-button inline-flex items-center w-full px-2.5 py-1.5 rounded-lg text-sm bg-transparent border-none text-secondary-foreground hover:bg-sidebar-secondary hover:text-foreground cursor-pointer" data-sim-settings-tab="plugins" data-active="false">插件与 MCP 市场</button>
+          <div class="mt-auto">
+            <button type="button" class="agy-button inline-flex items-center w-full px-2.5 py-1.5 rounded-lg text-sm bg-transparent border-none text-muted-foreground hover:bg-sidebar-secondary hover:text-foreground cursor-pointer" data-sim-action="close-settings">关闭设置 (Esc)</button>
+          </div>
+        </nav>
+        <div class="flex-1 min-w-0 overflow-y-auto" id="ag-settings-body"></div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Stack -->
+    <div class="ag-toast-host" id="ag-toast-host"></div>
+
+    <!-- Minimal Floating Preview Control Drawer (Protected from Prism CSS) -->
+    <aside class="wb-sim-drawer" id="wb-sim-drawer" data-ag-no-i18n="" hidden>
+      <div class="wb-sim-status" id="sim-status-line">当前态：原生 Antigravity 1:1 真身镜像（未注入）</div>
+
+      <div>
+        <div class="wb-sim-sec-title">界面场景快切</div>
+        <div class="wb-sim-grid">
+          <button type="button" class="wb-sim-chip" data-sim-action="go-conv">主对话工作区</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="go-history">历史对话页 (row-history)</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="go-home">新建首页 (.agy-home)</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="open-settings">原生设置弹窗</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="open-settings-plugins">插件 &amp; Sheet</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="wb-sim-sec-title">Prism 真实调色板与质感</div>
+        <div class="wb-sim-grid">
+          <button type="button" class="wb-sim-chip" data-sim-preset="obsidian-dark" data-active="true">Obsidian 深空</button>
+          <button type="button" class="wb-sim-chip" data-sim-preset="warm-dark">Warm 暖炭</button>
+          <button type="button" class="wb-sim-chip" data-sim-preset="crystal-light">白昼冷晶</button>
+          <button type="button" class="wb-sim-chip" data-sim-preset="alabaster-light">暖白画册</button>
+          <button type="button" class="wb-sim-chip" data-sim-preset="host-dark">跟随宿主</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="wb-sim-sec-title">圆角 / 滚底动效 / 小蟹堆</div>
+        <div class="wb-sim-grid">
+          <button type="button" class="wb-sim-chip" data-sim-cfg="corners:sharp">Sharp 锐角</button>
+          <button type="button" class="wb-sim-chip" data-sim-cfg="corners:balanced" data-active="true">Balanced 折中</button>
+          <button type="button" class="wb-sim-chip" data-sim-cfg="corners:soft">Soft 柔和</button>
+          <button type="button" class="wb-sim-chip" data-sim-cfg="scrollBottomMotion:smooth" data-active="true">高速滚底</button>
+          <button type="button" class="wb-sim-chip" data-sim-cfg="scrollBottomMotion:instant">原生瞬移</button>
+          <button type="button" class="wb-sim-chip" data-sim-cfg="mascotMiniPile:toggle">三只小蟹堆</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="wb-sim-sec-title">高频弹层与交互模拟</div>
+        <div class="wb-sim-grid">
+          <button type="button" class="wb-sim-chip" data-sim-action="open-model-menu">模型 &amp; 棱镜滑块</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="toggle-perm-menu">Turbo 权限面板</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="toggle-slash-menu">Slash 弹层</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="open-fastpick">Fastpick (Ctrl+K)</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="toggle-floatkit">浮件展柜 (划词/Tip)</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="toggle-streaming">模拟流式吐字</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="toggle-vial-high">水试管 86% 预警</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="toggle-win-blur">失焦 0fps 模拟</button>
+          <button type="button" class="wb-sim-chip" data-sim-action="spawn-toast">四色光学 Toast</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="wb-sim-sec-title">双宠 9 大 Slash 剧场速演</div>
+        <div class="wb-sim-grid">
+          <button type="button" class="wb-sim-chip" data-sim-slash="/plan">/plan</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/goal">/goal</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/boost">/boost</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/teamwork">/teamwork</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/browser">/browser</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/compact">/compact</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/schedule">/schedule</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/grill-me">/grill-me</button>
+          <button type="button" class="wb-sim-chip" data-sim-slash="/learn">/learn</button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:4px;border-top:1px solid rgba(255,255,255,0.1);">
+        <a href="/legacy" style="color:#8ab4f8;text-decoration:none;font-size:11px;">↗ 旧版光学矩阵 (/legacy)</a>
+        <a href="/studio" style="color:#9aa0b8;text-decoration:none;font-size:11px;">⚡ /studio</a>
+      </div>
+    </aside>
+  </div>
+
+  <script src="/replica.js"></script>
+</body>
+</html>

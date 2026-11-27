@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "Antigravity Prism Light is a modified fork of Obsidian Prism by RMvdesi. If you build on it, cite the original project and keep attribution per GPL-3.0 and NOTICE."
+type: software
+title: "Antigravity Prism Light"
+abstract: "Lightweight, cleaned-up fork of Obsidian Prism: optical UI themes, WebGL2 effects, quota telemetry, effort slider and thought translator for Antigravity, without self-update, remote code downloads or shortcut rewriting."
+authors:
+  - name: "RMvdesi"
+    website: "https://github.com/RMvdesi"
+  - name: "menscho"
+    website: "https://github.com/menscho"
+version: 1.0.8-light.1
+date-released: "2026-11-27"
+license: GPL-3.0-only
+repository-code: "https://github.com/menscho/antigravity-prism-light"
+url: "https://github.com/menscho/antigravity-prism-light"
+references:
+  - type: software
+    title: "Obsidian Prism"
+    authors:
+      - name: "RMvdesi"
+    repository-code: "https://github.com/RMvdesi/obsidian-prism"
+    license: GPL-3.0-only
+keywords:
+  - antigravity
+  - optical-ui
+  - spring-animation
+  - webgl2
+  - developer-tools
+  - thought-translator
